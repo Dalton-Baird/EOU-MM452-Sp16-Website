@@ -24,9 +24,17 @@ body {
     padding: 6px;
     text-transform: uppercase;
     font-size: large;
-    /*border: none;*/
     border-width: 1px;
     background-color: #CCCCCC;
+    transition: all 150ms;
+}
+
+.main-button:hover {
+    transform: scale(1.05);
+}
+
+.main-button:active {
+    transform: scale(0.95)
 }
 
 /* Coloring */
