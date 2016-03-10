@@ -2,16 +2,69 @@
 body {
     margin: 0;
     padding: 0;
+    background-color: #333333;
 }
 
 .container {
     width: 100vw;
     height: 100vh;
 
-    background-color: #333333;
+    /*background-color: #333333;*/
     color: #CCCCCC;
 
+    font-size: x-large;
+}
+
+.container, .main-button, .tahoma-bold {
     font-family: Tahoma,Verdana,Segoe,sans-serif;
     font-weight: bold;
-    font-size: x-large;
+}
+
+.main-button {
+    padding: 6px;
+    text-transform: uppercase;
+    font-size: large;
+    /*border: none;*/
+    border-width: 1px;
+    background-color: #CCCCCC;
+}
+
+/* Coloring */
+
+.color-white {
+    color: #FFFFFF;
+}
+
+.color-light-grey {
+    color: #CCCCCC;
+}
+
+.background-red {
+    background-color: #96172e;
+    border-color: #aa2b42;
+}
+
+.background-orange {
+    background-color: #b2541a;
+    border-color: #c6682e;
+}
+
+.background-tan {
+    background-color: #f3cf45;
+    border-color: #ffe359;
+}
+
+.background-green {
+    background-color: #739600;
+    border-color: #87aa14;
+}
+
+.background-gold {
+    background-color: #b88b00;
+    border-color: #cc9f14;
+}
+
+.background-blue {
+    background-color: #385475;
+    border-color: #4c6889;
 }
