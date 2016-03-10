@@ -1,0 +1,17 @@
+/* Set the margin and padding on the body to 0 so the container takes up the whole space */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+
+    background-color: #333333;
+    color: #CCCCCC;
+
+    font-family: Tahoma,Verdana,Segoe,sans-serif;
+    font-weight: bold;
+    font-size: x-large;
+}
