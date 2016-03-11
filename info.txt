@@ -1,0 +1,6 @@
+12 Column Grid Layout:
+- 12 columns
+- 11 spacings
+- 47 "spacings" total, including the columns (12*3 + 11 = 47)
+- 1 column = 3 spacings = 3/47 = 6.3829787% of total width
+- 1 spacing = 1/47 = 2.12765957% of total width

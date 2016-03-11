@@ -3,18 +3,26 @@ body {
     margin: 0;
     padding: 0;
     background-color: #333333;
+
+    /*margin-left: calc(-100vw * 1/47/2) !important;*/
+    /*margin-right: calc(-100vw * 1/47/2) !important;*/
 }
 
 .container-fluid {
     /*width: 100vw;*/
     /*height: 100vh;*/
 
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
+    /*padding-right: 30px;*/
+    /*padding-left: 30px;*/
+    /*margin-right: auto;*/
+    /*margin-left: auto;*/
 
-    /*background-color: #333333;*/
+    /* Disable container left and right padding */
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    /*margin-left: calc(100vw * (0-1) * 1/47) !important;*/
+    /*margin-right: calc(100vw * (0-1) * 1/47) !important;*/
+
     color: #CCCCCC;
 
     font-size: x-large;
@@ -23,6 +31,31 @@ body {
 .container-fluid, .main-button, .tahoma-bold {
     font-family: Tahoma,Verdana,Segoe,sans-serif;
     font-weight: bold;
+}
+
+/* Adjust Bootstrap column spacing for columns (class starting with col) inside rows inside the container */
+.container-fluid div.row > div[class^="col"] {
+    /* Calculate the padding based on 47 spacings (3 per column of the 12 column grid, + 11 intermediate spacings) */
+    padding-left: calc(100% * 1/47/2);
+    padding-right: calc(100% * 1/47/2);
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/* Disable padding for the first column */
+.container-fluid div.row > div[class^="col"]:first-child {
+    padding-left: 0;
+}
+
+/* Disable padding for the last column */
+.container-fluid div.row > div[class^="col"]:last-child {
+    padding-right: 0;
+}
+
+/* Disable row margins */
+.row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
 }
 
 .main-button {
