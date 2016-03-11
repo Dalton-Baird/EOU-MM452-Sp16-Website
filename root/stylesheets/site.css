@@ -22,6 +22,8 @@ body {
     padding-right: 0 !important;
     /*margin-left: calc(100vw * (0-1) * 1/47) !important;*/
     /*margin-right: calc(100vw * (0-1) * 1/47) !important;*/
+    max-width: 100vw !important;
+    overflow: hidden; /* Disables scrollbars, used for the extra half-spacing at the end that I couldn't get rid of */
 
     color: #CCCCCC;
 
@@ -36,26 +38,33 @@ body {
 /* Adjust Bootstrap column spacing for columns (class starting with col) inside rows inside the container */
 .container-fluid div.row > div[class^="col"] {
     /* Calculate the padding based on 47 spacings (3 per column of the 12 column grid, + 11 intermediate spacings) */
-    padding-left: calc(100% * 1/47/2);
-    padding-right: calc(100% * 1/47/2);
-    margin-left: 0;
-    margin-right: 0;
+    padding-left: calc(100vw * 1/47/2);
+    padding-right: calc(100vw * 1/47/2);
+    /*margin-left: 0;*/
+    /*margin-right: 0;*/
 }
 
 /* Disable padding for the first column */
 .container-fluid div.row > div[class^="col"]:first-child {
-    padding-left: 0;
+    /*padding-left: 0;*/
+    /*width: calc(8.33333333vw - 100vw * 1/47/2);*/
 }
 
 /* Disable padding for the last column */
 .container-fluid div.row > div[class^="col"]:last-child {
-    padding-right: 0;
+    /*padding-right: 0;*/
+    /*width: calc(8.33333333vw - 100vw * 1/47/2);*/
 }
 
 /* Disable row margins */
 .row {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
+    /*margin-left: 0 !important;*/
+    /*margin-right: 0 !important;*/
+    /*max-width: 100vw !important;*/
+
+    /* Negative margins for a half-spacing so that columns line up with the screen */
+    margin-left: calc(-100vw * 1/47/2) !important;
+    margin-right: calc(-100vw * 1/47/2) !important;
 }
 
 .main-button {
