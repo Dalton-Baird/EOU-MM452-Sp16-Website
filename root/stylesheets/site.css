@@ -129,7 +129,6 @@ body {
     border-width: 1px;
     background-color: #CCCCCC;
     transition: all 150ms;
-    z-index: -1;
 }
 
 .nav-button:hover {
@@ -145,6 +144,7 @@ body {
     top: calc(50vh - (100vw * 3/47/2));
     left: 0;
     right: 0;
+    z-index: 999;
 }
 
 .social-button-row-1 {
@@ -178,15 +178,16 @@ body {
     left: calc(100vw * 4/47);
     right: 0;
     top: calc(50vh - (100vw * ((3 * 3 + 1) + 2.5)/47)/2);
+    width: 1000vw;
 }
 
 .box {
     height: calc(100vw * ((3 * 3 + 1) + 2.5)/47);
-    width: calc(100vw * (4 * 3 + 3)/47);
+    /*width: calc(100vw * (4 * 3 + 3)/47);*/
 }
 
 .box-double {
-    width: calc(100vw * (8 * 3 + 7)/47);
+    /*width: calc(100vw * (8 * 3 + 7)/47);*/
 }
 
 .box-img {
@@ -200,6 +201,23 @@ body {
 
 .title {
     text-transform: uppercase;
+    line-height: 100%;
+}
+
+.image-caption {
+    width: calc(100vw * 14/47);
+    padding: calc(100vw * 1/47/4);
+    font-size: calc(100vw * 1/47/2.5);
+    position: relative;
+    float: right;
+    margin-top: calc(-100vw * (1/47/2 + 1.5/47));
+    margin-right: calc(100vw * 1/47/2);
+    opacity: 0.8;
+    font-weight: normal;
+
+    /*position: absolute;*/
+    /*bottom: calc(100vw * 1/47/2);*/
+    /*right: calc(100vw * 1/47/2);*/
 }
 
 /* Coloring */
@@ -240,6 +258,16 @@ body {
 .background-blue {
     background-color: #385475;
     border-color: #4c6889;
+}
+
+.background-light-blue {
+    background-color: #0076a3;
+    border-color: #148ab7;
+}
+
+.background-brown {
+    background-color: #8c6239;
+    border-color: #a0764d;
 }
 
 /* Styling */
