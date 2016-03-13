@@ -27,7 +27,11 @@ body {
 
     color: #CCCCCC;
 
-    font-size: x-large;
+    /* Font size adjustment fail */
+    /*-webkit-text-size-adjust: none;*/
+    /*text-size-adjust: none;*/
+    /*font-size: x-large;*/
+    /*font-size: 5%;*/
 }
 
 .container-fluid, .main-button, .tahoma-bold {
@@ -68,9 +72,11 @@ body {
 }
 
 .main-button {
-    padding: 6px;
+    /*padding: 6px;*/
+    padding: 0.2vw;
     text-transform: uppercase;
-    font-size: large;
+    /*font-size: large;*/
+    font-size: 1vw;
     border-width: 1px;
     background-color: #CCCCCC;
     transition: all 150ms;
@@ -86,9 +92,11 @@ body {
 }
 
 .nav-button {
-    padding: 6px;
+    /*padding: 6px;*/
+    padding: 0.2vw;
     text-transform: uppercase;
-    font-size: large;
+    /*font-size: large;*/
+    font-size: 1vw;
     border-width: 1px;
     background-color: #CCCCCC;
     transition: all 150ms;
@@ -101,6 +109,13 @@ body {
 
 .nav-button:active {
     transform: scale(0.95)
+}
+
+.nav-button-row {
+    position: fixed;
+    top: calc(50vh - (100vw * 3/47/2));
+    left: 0;
+    right: 0;
 }
 
 .background-logo {
