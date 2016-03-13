@@ -1,0 +1,144 @@
+/* Custom Sizes */
+.spacing-width-half {
+    width: calc(100vw * 1/47/2);
+}
+
+.spacing-width-1 {
+    width: calc(100vw * 1/47);
+}
+
+.spacing-height-half {
+    height: calc(100vw * 1/47/2);
+}
+
+.spacing-height-1 {
+    height: calc(100vw * 1/47);
+}
+
+.spacing-height-2 {
+    height: calc(100vw * 2/47);
+}
+
+.spacing-height-3 {
+    height: calc(100vw * 3/47);
+}
+
+.spacing-height-4 {
+    height: calc(100vw * 4/47);
+}
+
+.spacing-height-5 {
+    height: calc(100vw * 5/47);
+}
+
+.spacing-height-6 {
+    height: calc(100vw * 6/47);
+}
+
+.spacing-height-7 {
+    height: calc(100vw * 7/47);
+}
+
+.spacing-height-8 {
+    height: calc(100vw * 8/47);
+}
+
+.spacing-height-9 {
+    height: calc(100vw * 9/47);
+}
+
+.spacing-height-10 {
+    height: calc(100vw * 10/47);
+}
+
+.spacing-height-11 {
+    height: calc(100vw * 11/47);
+}
+
+.spacing-height-12 {
+    height: calc(100vw * 12/47);
+}
+
+.spacing-margin-left-half {
+     margin-left: calc(100vw * 1/47/2) !important;
+}
+
+.spacing-margin-left-1 {
+     margin-left: calc(100vw * 1/47) !important;
+}
+
+.spacing-margin-top-half {
+    margin-top: calc(100vw * 1/47/2);
+}
+
+.spacing-margin-top-1 {
+    margin-top: calc(100vw * 1/47);
+}
+
+.spacing-margin-top-2 {
+    margin-top: calc(100vw * 2/47);
+}
+
+.spacing-margin-top-3 {
+    margin-top: calc(100vw * 3/47);
+}
+
+.spacing-margin-top-4 {
+    margin-top: calc(100vw * 4/47);
+}
+
+.spacing-margin-top-5 {
+    margin-top: calc(100vw * 5/47);
+}
+
+.spacing-margin-top-6 {
+    margin-top: calc(100vw * 6/47);
+}
+
+.spacing-margin-top-7 {
+    margin-top: calc(100vw * 7/47);
+}
+
+.spacing-margin-top-8 {
+    margin-top: calc(100vw * 8/47);
+}
+
+.spacing-margin-bottom-half {
+    margin-bottom: calc(100vw * 1/47/2);
+}
+
+.spacing-margin-bottom-1 {
+    margin-bottom: calc(100vw * 1/47);
+}
+
+.spacing-margin-bottom-2 {
+    margin-bottom: calc(100vw * 2/47);
+}
+
+.spacing-margin-bottom-3 {
+    margin-bottom: calc(100vw * 3/47);
+}
+
+.spacing-margin-bottom-4 {
+    margin-bottom: calc(100vw * 4/47);
+}
+
+.spacing-margin-bottom-5 {
+    margin-bottom: calc(100vw * 5/47);
+}
+
+.spacing-margin-bottom-6 {
+    margin-bottom: calc(100vw * 6/47);
+}
+
+.spacing-margin-bottom-7 {
+    margin-bottom: calc(100vw * 7/47);
+}
+
+.spacing-margin-bottom-8 {
+    margin-bottom: calc(100vw * 8/47);
+}
+
+.full-width {
+    width: 100%;
+}
