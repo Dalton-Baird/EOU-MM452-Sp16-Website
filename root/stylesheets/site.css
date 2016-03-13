@@ -35,7 +35,7 @@ body {
     font-size: 1.2vw;
 }
 
-.container-fluid, .main-button, .tahoma-bold {
+.container-fluid, .main-button, .tahoma-bold, .title {
     font-family: Tahoma,Verdana,Segoe,sans-serif;
     font-weight: bold;
 }
@@ -173,6 +173,35 @@ body {
     color: #666666;
 }
 
+.boxes-row {
+    position: fixed;
+    left: calc(100vw * 4/47);
+    right: 0;
+    top: calc(50vh - (100vw * ((3 * 3 + 1) + 2.5)/47)/2);
+}
+
+.box {
+    height: calc(100vw * ((3 * 3 + 1) + 2.5)/47);
+    width: calc(100vw * (4 * 3 + 3)/47);
+}
+
+.box-double {
+    width: calc(100vw * (8 * 3 + 7)/47);
+}
+
+.box-img {
+    width: 100%;
+    height: calc(100vw * (3 * 3 + 1)/47)
+}
+
+.box-img-double {
+
+}
+
+.title {
+    text-transform: uppercase;
+}
+
 /* Coloring */
 
 .color-white {
@@ -227,4 +256,8 @@ body {
 
 .all-caps {
     text-transform: uppercase;
+}
+
+.debug-border {
+    border: 1px solid red !important;
 }
