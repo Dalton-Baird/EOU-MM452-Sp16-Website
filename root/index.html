@@ -71,8 +71,8 @@
                         <div class="title">Welcome to EOU</div>
                         <img src="images/box-1.jpg" class="box-img box-image-double spacing-margin-top-half">
                         <div class="image-caption background-blue">Small class sizes allow for a closer connection to the instructor, enhancing the learning experience.</div>
-                        <button class="main-button color-white background-gold spacing-width-3 spacing-height-1 spacing-margin-top-half spacing-margin-left-1 pull-right">Learn More</button>
-                        <button class="main-button color-white background-green spacing-width-3 spacing-height-1 spacing-margin-top-half pull-right">Apply Now</button>
+                        <button class="main-button color-white background-gold spacing-width-4 spacing-height-1 spacing-margin-top-half spacing-margin-left-1 pull-right">Learn More</button>
+                        <button class="main-button color-white background-green spacing-width-4 spacing-height-1 spacing-margin-top-half pull-right">Apply Now</button>
                     </div>
                 </div>
 
@@ -81,7 +81,7 @@
                         <div class="title">Programs</div>
                         <img src="images/box-2.jpg" class="box-img spacing-margin-top-half">
                         <div class="image-caption background-orange">Discover the various academic programs that EOU offers.</div>
-                        <button class="main-button color-white background-gold spacing-width-3 spacing-height-1 spacing-margin-top-half spacing-margin-left-1 pull-right">Learn More</button>
+                        <button class="main-button color-white background-gold spacing-width-4 spacing-height-1 spacing-margin-top-half spacing-margin-left-1 pull-right">Learn More</button>
                     </div>
                 </div>
 
@@ -90,7 +90,7 @@
                         <div class="title">Community</div>
                         <img src="images/box-3.jpg" class="box-img spacing-margin-top-half">
                         <div class="image-caption background-gold">With close proximity to downtown La Grande, students can easily access many of the local shops and attractions.</div>
-                        <button class="main-button color-white background-gold spacing-width-3 spacing-height-1 spacing-margin-top-half spacing-margin-left-1 pull-right">Learn More</button>
+                        <button class="main-button color-white background-gold spacing-width-4 spacing-height-1 spacing-margin-top-half spacing-margin-left-1 pull-right">Learn More</button>
                     </div>
                 </div>
 
@@ -99,16 +99,16 @@
                         <div class="title">Sports</div>
                         <img src="images/box-4.jpg" class="box-img box-image-double spacing-margin-top-half">
                         <div class="image-caption background-red">EOU football player about to score winning touchdown.</div>
-                        <button class="main-button color-white background-gold spacing-width-3 spacing-height-1 spacing-margin-top-half spacing-margin-left-1 pull-right">Learn More</button>
+                        <button class="main-button color-white background-gold spacing-width-4 spacing-height-1 spacing-margin-top-half spacing-margin-left-1 pull-right">Learn More</button>
                     </div>
                 </div>
 
                 <div class="col-custom-vw-4">
-                    <div class="box debug-border">
+                    <div class="box">
                         <div class="title">Events &amp; Activities</div>
                         <img src="images/box-5.jpg" class="box-img spacing-margin-top-half">
                         <div class="image-caption background-orange">Art students create three-dimensional sculptures out of clay.</div>
-                        <button class="main-button color-white background-gold spacing-width-3 spacing-height-1 spacing-margin-top-half spacing-margin-left-1 pull-right">Learn More</button>
+                        <button class="main-button color-white background-gold spacing-width-4 spacing-height-1 spacing-margin-top-half spacing-margin-left-1 pull-right">Learn More</button>
                     </div>
                 </div>
             </div>
@@ -116,5 +116,36 @@
         </div> <!-- END container div -->
 
         <script src="jquery/jquery-2.2.1.min.js"></script>
+
+        <script>
+            var SCROLL_AMOUNT = 50;
+
+            //Create a function to handle scrolling
+            var scrollHandler = function (e, row) {
+                var delta = e.originalEvent.wheelDelta;
+                var currentOffset = parseFloat(row.css("left"));
+                //console.log(row.style("left"));
+                if (delta > 0) {
+                    //Scrolled up
+                    //console.log("Scrolled up");
+                    //console.log("Current offset: \"" + currentOffset + "\"");
+                    //row.css("left", currentOffset + SCROLL_AMOUNT);
+                    row.css("left", "+=" + SCROLL_AMOUNT);
+                }
+                else {
+                    //Scrolled down
+                    //console.log("Scrolled down");
+                    //console.log("Current offset: \"" + currentOffset + "\"");
+                    //row.css("left", currentOffset - SCROLL_AMOUNT);
+                    row.css("left", "-=" + SCROLL_AMOUNT);
+                }
+            }
+
+            //Handle scrolling
+            $(document).bind("wheel", function (e) {
+                scrollHandler(e, $(".boxes-row"));
+                scrollHandler(e, $(".title-row"));
+            });
+        </script>
     </body>
 </html>

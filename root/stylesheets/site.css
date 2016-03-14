@@ -94,7 +94,7 @@ body {
 
 .title-row {
     position: fixed;
-    left: 0;
+    left: -1.4vw;
     /*left: -1.2vw;*/
     right: -999vw;
     top: 0;
@@ -111,6 +111,7 @@ body {
     color: #444444;
     cursor: default;
     width: 1000vw;
+    line-height: 68%;
     
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none;   /* Chrome/Safari/Opera */
