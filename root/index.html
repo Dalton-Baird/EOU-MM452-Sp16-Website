@@ -38,8 +38,8 @@
 
             <div class="row nav-button-row">
                 <div class="col-xs-12">
-                    <button class="nav-button color-white background-red spacing-width-1 spacing-height-3">&lt;</button>
-                    <button class="nav-button color-white background-red spacing-width-1 spacing-height-3 pull-right">&gt;</button>
+                    <button class="nav-button color-white background-red spacing-width-1 spacing-height-3" id="nav-left">&lt;</button>
+                    <button class="nav-button color-white background-red spacing-width-1 spacing-height-3 pull-right" id="nav-right">&gt;</button>
                 </div>
             </div>
 
@@ -118,37 +118,83 @@
         <script src="jquery/jquery-2.2.1.min.js"></script>
 
         <script>
-            var SCROLL_AMOUNT = 1;
-            var SCROLL_OFFSET = 0;
-            var SCROLL_MIN = -115;
-            var SCROLL_MAX = 0;
+            var SCROLL_AMOUNT = 0.1;        //Amount of spaces to scroll
+            var SCROLL_OFFSET = 0;          //The current scroll offset
+            var SCROLL_MIN = -115;          //The minimum scroll offset
+            var SCROLL_MAX = 0;             //The maximum scroll offset
+            var SCROLL_FORCE = 0;           //The amount to scroll each frame
+            var SCROLL_FORCE_MIN = -5;      //The minimum amount of scroll force
+            var SCROLL_FORCE_MAX = 5;       //The maximum amount of scroll force
+            var SCROLL_FRICTION = 0.825;    //The number to multiply the scroll force by each frame
+            var SCROLL_FORCE_STOP = 0.01;   //When the absolute scroll force gets this small, it will be set to 0
+            var LEFT_BUTTON_DOWN = false;   //If true, the left button is pressed
+            var RIGHT_BUTTON_DOWN = false;  //If true, the right button is pressed
+            var BUTTON_FORCE = 0.2;         //The amount of force to apply while a button is pressed
 
-            //Create a function to handle scrolling
-            var scrollHandler = function (e, row, generateLeftCSSWithOffset) {
-                var delta = e.originalEvent.wheelDelta;
-                if (delta > 0) {
-                    //Scrolled up
-                    //console.log("Scrolled up");
-                    SCROLL_OFFSET += SCROLL_AMOUNT;
-                }
-                else {
-                    //Scrolled down
-                    //console.log("Scrolled down");
-                    SCROLL_OFFSET -= SCROLL_AMOUNT;
-                    
-                }
+            /**
+             * Handles scrolling
+             * Params:
+             *      delta: The change in mouse wheel, generally positive or negative
+             *      row: The thing to scroll
+             *      generateLeftCSSWithOffset: A function to call to generate the CSS for the left rule.
+             *          The function takes the offset, which is the number of "spaces" to offset.  There
+             *          are 47 spaces on the screen horizontally.  See site.css for details.
+             */
+            var scrollHandler = function (delta, row, generateLeftCSSWithOffset) {
+
+                SCROLL_OFFSET += delta * SCROLL_AMOUNT; //Calculate the new scroll offset
+
                 SCROLL_OFFSET = Math.max(SCROLL_MIN, Math.min(SCROLL_MAX, SCROLL_OFFSET)); //Clamp the offset
                 var calcExpr = generateLeftCSSWithOffset(SCROLL_OFFSET); //Generate the CSS value (which is a calc() expression)
-                //console.log(calcExpr);
                 row.css("left", calcExpr); //Set the CSS value
             }
 
             //Handle scrolling
             $(document).bind("wheel", function (e) {
-                //console.log("\nScrolled");
-                scrollHandler(e, $(".boxes-row"), function (offset) { return "calc(100vw * (4 + " + offset + ")/47)" });
-                scrollHandler(e, $(".title-row"), function (offset) { return "calc(-1.4vw + (100vw * " + offset + "/47))" });
+                //console.log("\nScrolled.  Delta: " + e.originalEvent.wheelDelta);
+                SCROLL_FORCE += e.originalEvent.wheelDelta;
             });
+
+            //Handle left button
+            $("#nav-left").mousedown(function () {
+                LEFT_BUTTON_DOWN = true;
+            });
+            $("#nav-left").mouseup(function () {
+                LEFT_BUTTON_DOWN = false;
+            });
+            $("#nav-left").mouseleave(function () {
+                LEFT_BUTTON_DOWN = false;
+            });
+
+            //Handle right button
+            $("#nav-right").mousedown(function () {
+                RIGHT_BUTTON_DOWN = true;
+            });
+            $("#nav-right").mouseup(function () {
+                RIGHT_BUTTON_DOWN = false;
+            });
+            $("#nav-right").mouseleave(function () {
+                RIGHT_BUTTON_DOWN = false;
+            });
+
+            //Smooth scrolling
+            window.setInterval(function () {
+                //Handle buttons
+                if (LEFT_BUTTON_DOWN)
+                    SCROLL_FORCE += BUTTON_FORCE;
+                if (RIGHT_BUTTON_DOWN)
+                    SCROLL_FORCE -= BUTTON_FORCE;
+
+                SCROLL_FORCE = Math.max(SCROLL_FORCE_MIN, Math.min(SCROLL_FORCE_MAX, SCROLL_FORCE)); //Clamp the scroll force
+
+                //Scroll
+                scrollHandler(SCROLL_FORCE, $(".boxes-row"), function (offset) { return "calc(100vw * (4 + " + offset + ")/47)" });
+                scrollHandler(SCROLL_FORCE, $(".title-row"), function (offset) { return "calc(-1.4vw + (100vw * " + offset + "/47))" });
+
+                SCROLL_FORCE *= SCROLL_FRICTION; //Apply friction
+                if (Math.abs(SCROLL_FORCE) < SCROLL_FORCE_STOP) //Set the scroll force to 0 if it is small enough
+                    SCROLL_FORCE = 0;
+            }, 10);
         </script>
     </body>
 </html>
