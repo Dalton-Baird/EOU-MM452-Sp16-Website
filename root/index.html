@@ -118,33 +118,36 @@
         <script src="jquery/jquery-2.2.1.min.js"></script>
 
         <script>
-            var SCROLL_AMOUNT = 50;
+            var SCROLL_AMOUNT = 1;
+            var SCROLL_OFFSET = 0;
+            var SCROLL_MIN = -115;
+            var SCROLL_MAX = 0;
 
             //Create a function to handle scrolling
-            var scrollHandler = function (e, row) {
+            var scrollHandler = function (e, row, generateLeftCSSWithOffset) {
                 var delta = e.originalEvent.wheelDelta;
-                var currentOffset = parseFloat(row.css("left"));
-                //console.log(row.style("left"));
                 if (delta > 0) {
                     //Scrolled up
                     //console.log("Scrolled up");
-                    //console.log("Current offset: \"" + currentOffset + "\"");
-                    //row.css("left", currentOffset + SCROLL_AMOUNT);
-                    row.css("left", "+=" + SCROLL_AMOUNT);
+                    SCROLL_OFFSET += SCROLL_AMOUNT;
                 }
                 else {
                     //Scrolled down
                     //console.log("Scrolled down");
-                    //console.log("Current offset: \"" + currentOffset + "\"");
-                    //row.css("left", currentOffset - SCROLL_AMOUNT);
-                    row.css("left", "-=" + SCROLL_AMOUNT);
+                    SCROLL_OFFSET -= SCROLL_AMOUNT;
+                    
                 }
+                SCROLL_OFFSET = Math.max(SCROLL_MIN, Math.min(SCROLL_MAX, SCROLL_OFFSET)); //Clamp the offset
+                var calcExpr = generateLeftCSSWithOffset(SCROLL_OFFSET); //Generate the CSS value (which is a calc() expression)
+                //console.log(calcExpr);
+                row.css("left", calcExpr); //Set the CSS value
             }
 
             //Handle scrolling
             $(document).bind("wheel", function (e) {
-                scrollHandler(e, $(".boxes-row"));
-                scrollHandler(e, $(".title-row"));
+                //console.log("\nScrolled");
+                scrollHandler(e, $(".boxes-row"), function (offset) { return "calc(100vw * (4 + " + offset + ")/47)" });
+                scrollHandler(e, $(".title-row"), function (offset) { return "calc(-1.4vw + (100vw * " + offset + "/47))" });
             });
         </script>
     </body>
