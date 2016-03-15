@@ -152,7 +152,7 @@ body {
     position: fixed;
     left: 0;
     right: 0;
-    bottom: calc(100vw * 2.3/47);
+    bottom: calc(100vw * 2.4/47);
 }
 
 .social-button-row-2 {
@@ -160,6 +160,10 @@ body {
     left: 0;
     right: 0;
     bottom: calc(100vw * 1/47);
+}
+
+.social-button-row-offset {
+     margin-left: calc(100vw * 25.3/47) !important;
 }
 
 .copyright-row {
@@ -219,6 +223,12 @@ body {
     /*position: absolute;*/
     /*bottom: calc(100vw * 1/47/2);*/
     /*right: calc(100vw * 1/47/2);*/
+}
+
+.button-with-icon {
+     background-size: 80%;
+     background-repeat: no-repeat;
+     background-position: center;
 }
 
 /* Coloring */
