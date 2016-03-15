@@ -19,14 +19,14 @@
     <body>
         <div class="container-fluid">
              
-            <div class="row spacing-margin-top-1 spacing-margin-left-half">
+            <div class="row spacing-margin-top-1 spacing-margin-left-half spacing-height-3">
                 <div class="col-xs-4">
-                    <button class="main-button color-white spacing-width-1 spacing-height-1">Se</button>
-                    <button class="main-button color-white spacing-width-1 spacing-height-1 spacing-margin-left-1">St</button>
-                    <button class="main-button color-white spacing-width-1 spacing-height-1 spacing-margin-left-1">Fa</button>
-                    <button class="main-button color-white spacing-width-1 spacing-height-1 spacing-margin-left-1">Ac</button>
-                    <button class="main-button color-white spacing-width-1 spacing-height-1 spacing-margin-left-1">In</button>
-                    <button class="main-button color-white spacing-width-1 spacing-height-1 spacing-margin-left-1">Ot</button>
+                    <button class="main-button color-white spacing-width-1 spacing-height-1"                       data-toggle="tooltip" data-placement="bottom" title="Search EOU">Se</button>
+                    <button class="main-button color-white spacing-width-1 spacing-height-1 spacing-margin-left-1" data-toggle="tooltip" data-placement="bottom" title="Students">St</button>
+                    <button class="main-button color-white spacing-width-1 spacing-height-1 spacing-margin-left-1" data-toggle="tooltip" data-placement="bottom" title="Faculty">Fa</button>
+                    <button class="main-button color-white spacing-width-1 spacing-height-1 spacing-margin-left-1" data-toggle="tooltip" data-placement="bottom" title="Academics">Ac</button>
+                    <button class="main-button color-white spacing-width-1 spacing-height-1 spacing-margin-left-1" data-toggle="tooltip" data-placement="bottom" title="Information">In</button>
+                    <button class="main-button color-white spacing-width-1 spacing-height-1 spacing-margin-left-1" data-toggle="tooltip" data-placement="bottom" title="Other">Ot</button>
                 </div>
             </div>
             
@@ -38,8 +38,8 @@
 
             <div class="row nav-button-row">
                 <div class="col-xs-12">
-                    <button class="nav-button color-white background-red spacing-width-1 spacing-height-3" id="nav-left">&lt;</button>
-                    <button class="nav-button color-white background-red spacing-width-1 spacing-height-3 pull-right" id="nav-right">&gt;</button>
+                    <button class="nav-button color-white background-red spacing-width-1 spacing-height-3" id="nav-left">&lt;</button> <!--data-toggle="tooltip" data-placement="right" title="Hold to scroll left"-->
+                    <button class="nav-button color-white background-red spacing-width-1 spacing-height-3 pull-right" id="nav-right">&gt;</button> <!--data-toggle="tooltip" data-placement="left" title="Hold to scroll right"-->
                 </div>
             </div>
 
@@ -51,11 +51,11 @@
 
             <div class="row social-button-row-2">
                 <div class="col-xs-3 social-button-row-offset">
-                    <button class="main-button color-white button-with-icon background-blue spacing-width-1 spacing-height-1" onclick="window.location.href = 'http://www.facebook.com/eouadmissions';" style="background-image: url('icons/facebook.svg')"/>
-                    <button class="main-button color-white button-with-icon background-light-blue spacing-width-1 spacing-height-1 spacing-margin-left-1" onclick="window.location.href = 'https://twitter.com/eoumountaineers';" style="background-image: url('icons/twitter.svg')"/>
-                    <button class="main-button color-white button-with-icon background-brown spacing-width-1 spacing-height-1 spacing-margin-left-1" onclick="window.location.href = 'http://instagram.com/monty.mountaineer';" style="background-image: url('icons/instagram.svg')"/>
-                    <button class="main-button color-white button-with-icon background-orange spacing-width-1 spacing-height-1 spacing-margin-left-1" onclick="window.location.href = 'https://www.eou.edu/feed/';" style="background-image: url('icons/rss.svg')"/>
-                    <button class="main-button color-white button-with-icon background-red spacing-width-1 spacing-height-1 spacing-margin-left-1" onclick="window.location.href = 'http://www.youtube.com/eouniversity';" style="background-image: url('icons/youtube.svg')"/>
+                    <button class="main-button color-white button-with-icon background-blue spacing-width-1 spacing-height-1" onclick="window.location.href = 'http://www.facebook.com/eouadmissions';" style="background-image: url('icons/facebook.svg')" data-toggle="tooltip" data-placement="bottom" title="Facebook"/>
+                    <button class="main-button color-white button-with-icon background-light-blue spacing-width-1 spacing-height-1 spacing-margin-left-1" onclick="window.location.href = 'https://twitter.com/eoumountaineers';" style="background-image: url('icons/twitter.svg')" data-toggle="tooltip" data-placement="bottom" title="Twitter"/>
+                    <button class="main-button color-white button-with-icon background-brown spacing-width-1 spacing-height-1 spacing-margin-left-1" onclick="window.location.href = 'http://instagram.com/monty.mountaineer';" style="background-image: url('icons/instagram.svg')" data-toggle="tooltip" data-placement="bottom" title="Instagram"/>
+                    <button class="main-button color-white button-with-icon background-orange spacing-width-1 spacing-height-1 spacing-margin-left-1" onclick="window.location.href = 'https://www.eou.edu/feed/';" style="background-image: url('icons/rss.svg')" data-toggle="tooltip" data-placement="bottom" title="RSS Feed"/>
+                    <button class="main-button color-white button-with-icon background-red spacing-width-1 spacing-height-1 spacing-margin-left-1" onclick="window.location.href = 'http://www.youtube.com/eouniversity';" style="background-image: url('icons/youtube.svg')" data-toggle="tooltip" data-placement="bottom" title="YouTube"/>
                 </div>
             </div>
 
@@ -116,8 +116,16 @@
         </div> <!-- END container div -->
 
         <script src="jquery/jquery-2.2.1.min.js"></script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
 
-        <script>
+        <script> //Enable stuff
+            //Bootstrap tooltips
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
+
+        <script> //Scrolling Script - By Dalton Baird
             var SCROLL_AMOUNT = 0.1;        //Amount of spaces to scroll
             var SCROLL_OFFSET = 0;          //The current scroll offset
             var SCROLL_MIN = -115;          //The minimum scroll offset
