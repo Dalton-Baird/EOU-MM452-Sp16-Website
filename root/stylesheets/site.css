@@ -92,6 +92,25 @@ body {
     transform: scale(0.95)
 }
 
+.menu-button {
+    background-color: transparent;
+    border: none;
+    transition: all 150ms;
+    z-index: 0;
+
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.menu-button:hover {
+    transform: scale(1.05);
+}
+
+.menu-button:active {
+    transform: scale(0.95)
+}
+
 .title-row {
     position: fixed;
     left: -1.4vw;
