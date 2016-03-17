@@ -26,12 +26,25 @@
 
             <div class="row spacing-margin-top-1 spacing-margin-left-half spacing-height-3">
                 <div class="col-xs-4">
-                    <button class="menu-button color-white spacing-width-1 spacing-height-1"                       data-toggle="tooltip" data-placement="bottom" title="Search EOU" style="background-image: url('icons/search.svg')"/>
+                    <button class="menu-button color-white spacing-width-1 spacing-height-1"                       data-toggle="tooltip" data-placement="bottom" title="Search EOU" style="background-image: url('icons/search.svg')" onclick="$('#search-row').toggle(); $('#searchbox').focus();"/>
                     <button class="menu-button color-white spacing-width-1 spacing-height-1 spacing-margin-left-1" data-toggle="tooltip" data-placement="bottom" title="Students" style="background-image: url('icons/backpack.svg')"/>
                     <button class="menu-button color-white spacing-width-1 spacing-height-1 spacing-margin-left-1" data-toggle="tooltip" data-placement="bottom" title="Faculty" style="background-image: url('icons/instructor.svg')"/>
                     <button class="menu-button color-white spacing-width-1 spacing-height-1 spacing-margin-left-1" data-toggle="tooltip" data-placement="bottom" title="Academics" style="background-image: url('icons/cap.svg')"/>
                     <button class="menu-button color-white spacing-width-1 spacing-height-1 spacing-margin-left-1" data-toggle="tooltip" data-placement="bottom" title="Information" style="background-image: url('icons/info.svg')"/>
                     <button class="menu-button color-white spacing-width-1 spacing-height-1 spacing-margin-left-1" data-toggle="tooltip" data-placement="bottom" title="Other" style="background-image: url('icons/other.svg')"/>
+                </div>
+            </div>
+
+            <div class="row spacing-margin-left-half" id="search-row" style="display: none;">
+                <div class="col-xs-4">
+                    <div class="popdown-arrow" style="left: calc(100vw * 1/47)"></div>
+                    <div class="searchbar">
+                        <form action="https://www.google.com/cse" method="GET">
+                            <input id="searchbox" class="searchbar-field" name="q" type="search" placeholder="Search EOU">
+                            <input type="hidden" name="cx" value="015310282007089969669:18cnoplcmm4">
+                            <input class="searchbar-submit" type="submit" style="background-image: url('icons/arrowSearch.svg')" value="" data-toggle="tooltip" data-placement="right" title="Search" >
+                        </form>
+                    </div>
                 </div>
             </div>
             

@@ -298,6 +298,54 @@ body {
      background-position: center;
 }
 
+.searchbar {
+    position: fixed;
+    background: #CCCCCC;
+    height: calc(100vw * 1.5/47);
+    width: calc(100vw * 14.7/47);
+    top: calc(100vw * 3/47);
+}
+
+.searchbar-field {
+    position: absolute;
+    left: calc(100vw * 1/47/8);
+    /*right: calc(100vw * 1/47/8);*/
+    top: calc(100vw * 1/47/8);
+    bottom: calc(100vw * 1/47/8);
+    /*width: calc(100% - (100vw * 1/47/3.5));*/
+    width: calc(100vw * 13.95/47);
+    /*height: calc(100vw * 1.2/47);*/
+
+    background: #EEEEEE;
+    color: #888888;
+    border: 0 none;
+    padding: calc(100vw * 1/47/4);
+}
+
+.searchbar-submit {
+    border: 0 none;
+    position: relative;
+    width: calc(100vw * ((1.5/47) - 1/47/2.5));
+    height: calc(100vw * ((1.5/47) - 1/47/2.5));
+    margin-left: calc(100vw * 13.3/47);
+    margin-top: calc(100vw * 0.2/47);
+    background-color: transparent;
+    background-size: 80%;
+     background-repeat: no-repeat;
+     background-position: center;
+}
+
+.popdown-arrow {
+    position: fixed;
+    top: calc(100vw * 2.51/47);
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: calc(100vw * 1/47/2) solid transparent;
+    border-right: calc(100vw * 1/47/2) solid transparent;
+    border-bottom: calc(100vw * 1/47/2) solid #CCCCCC;
+}
+
 /* Coloring */
 
 .color-white {
