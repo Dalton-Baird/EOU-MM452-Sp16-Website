@@ -19,6 +19,14 @@
     width: calc(100vw * 4/47);
 }
 
+.spacing-width-5 {
+    width: calc(100vw * 5/47);
+}
+
+.spacing-width-6 {
+    width: calc(100vw * 6/47);
+}
+
 .spacing-height-half {
     height: calc(100vw * 1/47/2);
 }

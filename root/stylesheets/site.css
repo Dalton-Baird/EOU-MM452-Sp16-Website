@@ -104,10 +104,29 @@ body {
 }
 
 .menu-button:hover {
-    transform: scale(1.05);
+    transform: scale(1.1);
 }
 
 .menu-button:active {
+    transform: scale(0.95)
+}
+
+.app-button {
+    background-color: transparent;
+    border: none;
+    transition: all 150ms;
+    z-index: 0;
+
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.app-button:hover {
+    transform: scale(1.05);
+}
+
+.app-button:active {
     transform: scale(0.95)
 }
 
@@ -141,6 +160,8 @@ body {
 }
 
 .nav-button {
+    /*position: relative;*/
+    /*z-index: 999;*/
     /*padding: 6px;*/
     padding: 0.2vw;
     text-transform: uppercase;
@@ -223,13 +244,19 @@ body {
 
 }
 
+.box-footer {
+    margin-top: calc(100vw * 1/47/2);
+    width: 100%;
+    height: calc(100vw * (3 * 3 + 1)/47);
+}
+
 .title {
     text-transform: uppercase;
     line-height: 100%;
 }
 
 .image-caption {
-    width: calc(100vw * 14/47);
+    width: calc(100vw * 13.7/47);
     padding: calc(100vw * 1/47/4);
     font-size: calc(100vw * 1/47/2.5);
     position: relative;
