@@ -18,7 +18,12 @@
     </head>
     <body>
         <div class="container-fluid">
-             
+            <div class="row nav-button-row2">
+                <!-- Navigation Buttons (They used to be in their own row below, but that was blocking the page) -->
+                <button class="nav-button nav-button-left  color-white button-with-icon background-red spacing-width-1 spacing-height-3" id="nav-left" style="background-image: url('icons/arrowLeft.svg')" /> <!--data-toggle="tooltip" data-placement="right" title="Hold to scroll left"-->
+                <button class="nav-button nav-button-right color-white button-with-icon background-red spacing-width-1 spacing-height-3 pull-right" id="nav-right" style="background-image: url('icons/arrowRight.svg')" /> <!--data-toggle="tooltip" data-placement="left" title="Hold to scroll right"-->
+            </div>     
+
             <div class="row spacing-margin-top-1 spacing-margin-left-half spacing-height-3">
                 <div class="col-xs-4">
                     <button class="menu-button color-white spacing-width-1 spacing-height-1"                       data-toggle="tooltip" data-placement="bottom" title="Search EOU" style="background-image: url('icons/search.svg')"/>
@@ -36,12 +41,12 @@
                 </div>
             </div>
 
-            <div class="row nav-button-row">
+            <!--<div class="row nav-button-row">
                 <div class="col-xs-12">
-                    <button class="nav-button color-white button-with-icon background-red spacing-width-1 spacing-height-3" id="nav-left" style="background-image: url('icons/arrowLeft.svg')"/> <!--data-toggle="tooltip" data-placement="right" title="Hold to scroll left"-->
-                    <button class="nav-button color-white button-with-icon background-red spacing-width-1 spacing-height-3 pull-right" id="nav-right" style="background-image: url('icons/arrowRight.svg')"/> <!--data-toggle="tooltip" data-placement="left" title="Hold to scroll right"-->
+                    <button class="nav-button color-white button-with-icon background-red spacing-width-1 spacing-height-3" id="nav-left" style="background-image: url('icons/arrowLeft.svg')"/> <!--data-toggle="tooltip" data-placement="right" title="Hold to scroll left"- ->
+                    <button class="nav-button color-white button-with-icon background-red spacing-width-1 spacing-height-3 pull-right" id="nav-right" style="background-image: url('icons/arrowRight.svg')"/> <!--data-toggle="tooltip" data-placement="left" title="Hold to scroll right"- ->
                 </div>
-            </div>
+            </div>-->
 
             <div class="row social-button-row-1">
                 <div class="col-xs-3 social-button-row-offset">
@@ -201,7 +206,7 @@
                                             <button class="main-button color-white background-orange spacing-width-6 spacing-height-1">Other Option</button>
                                         </div>
                                         <div class="col-xs-2">
-                                            <div class="title spacing-margin-top-half">Get the EOU app now</div>
+                                            <div class="title spacing-margin-top-half" style="letter-spacing: 0;">Get the EOU app now</div>
                                         </div>
                                         <div class="col-xs-2">
                                             <button class="main-button color-white background-green spacing-width-6 spacing-height-1">Galleries</button>
