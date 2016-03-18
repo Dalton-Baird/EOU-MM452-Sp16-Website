@@ -346,6 +346,44 @@ body {
     border-bottom: calc(100vw * 1/47/2) solid #CCCCCC;
 }
 
+.popdown-arrow-menu {
+    position: fixed;
+    top: calc(100vw * 2.51/47);
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: calc(100vw * 1/47/2) solid transparent;
+    border-right: calc(100vw * 1/47/2) solid transparent;
+    border-bottom: calc(100vw * 1/47/2) solid #AAAAAA;
+}
+
+.menu {
+    position: fixed;
+    background-color: #AAAAAA;
+    /*height: calc(100vw * 1.5/47);*/
+    width: calc(100vw * 14.7/47);
+    top: calc(100vw * 3/47);
+    padding: calc(100vw * 1/47/4);
+    max-height: calc(100vw * 4/47);
+}
+
+.menu-link {
+    display: inline-block;
+    color: #EEEEEE;
+    /*background-color: #BBBBBB;*/
+    /*border: 1px solid red;*/
+    width: calc(100vw * 7/47);
+}
+
+.menu-link:hover {
+    color: #148ab7;
+}
+
+#search-row, #menu-row {
+    position: absolute;
+    z-index: 999;
+}
+
 /* Coloring */
 
 .color-white {
