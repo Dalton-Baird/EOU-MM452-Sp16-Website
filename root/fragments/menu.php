@@ -5,6 +5,7 @@
         <button class="menu-button color-white spacing-width-1 spacing-height-1 spacing-margin-left-1" data-toggle="tooltip" data-placement="bottom" title="Faculty" style="background-image: url('icons/instructor.svg')" onclick="$('.menu-hideable').not('#menu-faculty').hide(); $('#menu-faculty').toggle();"/>
         <button class="menu-button color-white spacing-width-1 spacing-height-1 spacing-margin-left-1" data-toggle="tooltip" data-placement="bottom" title="Academics" style="background-image: url('icons/cap.svg')" onclick="$('.menu-hideable').not('#menu-academics').hide(); $('#menu-academics').toggle();"/>
         <button class="menu-button color-white spacing-width-1 spacing-height-1 spacing-margin-left-1" data-toggle="tooltip" data-placement="bottom" title="Information" style="background-image: url('icons/info.svg')" onclick="$('.menu-hideable').not('#menu-info').hide(); $('#menu-info').toggle();"/>
+        <button class="menu-button color-white spacing-width-1 spacing-height-1 spacing-margin-left-1" data-toggle="tooltip" data-placement="bottom" title="EOU Forum" style="background-image: url('icons/chat.svg')" onclick="window.location.href = 'TODO';"/>
         <button class="menu-button color-white spacing-width-1 spacing-height-1 spacing-margin-left-1" data-toggle="tooltip" data-placement="bottom" title="Other" style="background-image: url('icons/other.svg')" onclick="$('.menu-hideable').not('#menu-other').hide(); $('#menu-other').toggle();"/>
     </div>
 </div>
@@ -76,8 +77,8 @@
         </div>
     </div>
     <div class="col-xs-3 menu-hideable" id="menu-other" style="display: none">
-        <div class="popdown-arrow-menu" style="left: calc(100vw * 11/47)"></div>
-        <div class="menu" style="left: calc(100vw * 11/47)">
+        <div class="popdown-arrow-menu" style="left: calc(100vw * 13/47)"></div>
+        <div class="menu" style="left: calc(100vw * 13/47)">
             <a class="menu-link" href="#">Link</a>
             <a class="menu-link" href="#">Link</a>
             <a class="menu-link" href="#">Link</a>
