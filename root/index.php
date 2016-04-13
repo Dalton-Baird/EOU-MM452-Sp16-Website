@@ -211,15 +211,7 @@
 
         </div> <!-- END container div -->
 
-        <script src="jquery/jquery-2.2.1.min.js"></script>
-        <script src="bootstrap/js/bootstrap.min.js"></script>
-
-        <script> //Enable stuff
-            //Bootstrap tooltips
-            $(document).ready(function () {
-                $('[data-toggle="tooltip"]').tooltip();
-            });
-        </script>
+        <?php include 'fragments/footer-scripts.php'; ?>
 
         <script> //Scrolling Script - By Dalton Baird
             var SCROLL_AMOUNT = 0.1;        //Amount of spaces to scroll
