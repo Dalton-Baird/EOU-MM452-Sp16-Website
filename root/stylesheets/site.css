@@ -384,6 +384,10 @@ body {
     z-index: 999;
 }
 
+#menu-buttons-row {
+    /* position: absolute; TODO: get the menu to stay on screen at all times */
+}
+
 /* Coloring */
 
 .color-white {

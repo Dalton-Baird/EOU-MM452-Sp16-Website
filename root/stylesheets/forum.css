@@ -1,0 +1,14 @@
+.inner-container {
+    background-color: #555555;
+    height: 2000px; /* For testing purposes */
+}
+
+.forum-footer {
+    height: 200px;
+}
+
+.forum-description {
+    color: #CCCCCC;
+    font-size: 2em;
+    padding: calc(100vw * 1/47);
+}
