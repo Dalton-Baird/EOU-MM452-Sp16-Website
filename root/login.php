@@ -20,10 +20,10 @@
         if (!isset($_POST['password']) or $_POST['password'] == '')
             $errors[] = 'You must enter a password.';
         
+        $savedEmail = $connection -> real_escape_string($_POST['email']);
+        
         if (empty($errors)) //No errors, log in!
-        {
-            $savedEmail = $connection -> real_escape_string($_POST['email']);
-            
+        {            
             $loginQuery = $connection -> query(
                 "SELECT *
                  FROM Users
@@ -35,7 +35,7 @@
             {
                 //die($connection -> error_get_last());
                 $errors[] = 'Something went wrong while logging in.  Please try again.';
-                $errors[] = $connection -> error_get_last();
+                $errors[] = $connection -> error;
             }
             else if ($loginQuery -> num_rows < 1) //No user with that email and password
             {
@@ -83,18 +83,18 @@
                         
                         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
                             <div class="row">
-                                    <div class="col-sm-4"><span class="label">EOU Email</span></div>
-                                    <div class="col-sm-8"><input type="text" name="email" autofocus value="<?php echo htmlspecialchars($savedEmail); ?>"></div>
-                                </div>
-                                
-                                <div class="row">
-                                    <div class="col-sm-4"><span class="label">Password</span></div>
-                                    <div class="col-sm-8"><input type="password" name="password"></div>
-                                </div>
-                                
-                                <div class="row">
-                                    <div class="col-sm-4 col-sm-offset-4"><input class="main-button color-white background-blue reset-font-size" type="submit" value="Log in"></div>
-                                </div>
+                                <div class="col-sm-4"><span class="label">EOU Email</span></div>
+                                <div class="col-sm-8"><input type="text" name="email" autofocus value="<?php echo htmlspecialchars($savedEmail); ?>"></div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-sm-4"><span class="label">Password</span></div>
+                                <div class="col-sm-8"><input type="password" name="password"></div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-sm-4 col-sm-offset-4"><input class="main-button color-white background-blue reset-font-size" type="submit" value="Log in"></div>
+                            </div>
                         </form>
                         
                         <div class="login-errors">
