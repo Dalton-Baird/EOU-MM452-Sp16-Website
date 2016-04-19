@@ -2,7 +2,7 @@
     session_start();
     require_once('/fragments/connect.php');
             
-    $categoryQuery = $connection -> query(
+    $categoryQuery = $mysql -> query(
         "SELECT *
          FROM categories
          WHERE deleted=FALSE");
@@ -34,7 +34,7 @@
                                 if (!$categoryQuery)
                                 {
                                     echo 'Couldn\'t retrieve categories from the database.  Please try again.<br>';
-                                    echo '[DEBUG]: MySQL Error: ' . $connection -> error_get_last();
+                                    echo '[DEBUG]: MySQL Error: ' . $mysql -> error;
                                 }
                                 else
                                 {

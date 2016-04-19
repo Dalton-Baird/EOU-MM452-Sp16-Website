@@ -55,24 +55,25 @@
         {
             //All variables except the non-required ones are guaranteed to be set at this point
             
-            if (!ctype_graph($inputName))
+            //if (!ctype_graph($inputName))
+            if (preg_match('^([ \\u00c0-\\u01ffa-zA-Z\\\'\-.])+$', $inputName)) //Raw Regex: ^([ \u00c0-\u01ffa-zA-Z'\-.])+$
                 $errors[] = 'Your name can only contain graphical characters.';
             
             if (strlen($inputName) < 3 or strlen($inputName) > 45)
                 $errors[] = 'Your name must be 3 - 45 characters in length.';
             
             //Check if name is taken
-            $userQuery = $connection -> query(
+            $userQuery = $mysql -> query(
                 "SELECT *
                  FROM Users
-                 WHERE name = '" . $connection -> real_escape_string($inputName) . "'"
+                 WHERE name = '" . $mysql -> real_escape_string($inputName) . "'"
             );
             
             if (!$userQuery) //If the query failed
             {
-                //die($connection -> error_get_last());
+                //die($mysql -> error_get_last());
                 $errors[] = 'Something went wrong while checking for existing usernames.  Please try again.';
-                $errors[] = $connection -> error;
+                $errors[] = $mysql -> error;
             }
             else if ($userQuery -> num_rows > 0) //That name is already taken
             {
@@ -90,17 +91,17 @@
                 $errors[] = 'Your email address must be 5 - 45 characters in length.';
             
             //Check if email is taken
-            $emailQuery = $connection -> query(
+            $emailQuery = $mysql -> query(
                 "SELECT *
                  FROM Users
-                 WHERE email = '" . $connection -> real_escape_string($inputEmail) . "'"
+                 WHERE email = '" . $mysql -> real_escape_string($inputEmail) . "'"
             );
             
             if (!$emailQuery) //If the query failed
             {
-                //die($connection -> error_get_last());
+                //die($mysql -> error_get_last());
                 $errors[] = 'Something went wrong while checking for existing email registrations.  Please try again.';
-                $errors[] = $connection -> error;
+                $errors[] = $mysql -> error;
             }
             else if ($emailQuery -> num_rows > 0) //That email is already taken
             {
@@ -126,27 +127,35 @@
         
         if (empty($errors)) //No errors, register!
         {            
-            $insertStatement = $connection -> query(
-                "INSERT INTO
-                    Users(creation_date, update_date, creation_user, update_user, email, name, password_hash, major, minor, position, user_level)
-                 VALUES(
+            $insertStatement = $mysql -> multi_query(
+                "SET AUTOCOMMIT=0;
+                START TRANSACTION;
+                BEGIN;
+                INSERT INTO
+                    Users (creation_date, update_date, creation_user, update_user, email, name, password_hash, major, minor, position, user_level)
+                VALUES (
                     NOW(),
                     NOW(),
-                    TODO,
-                    TODO,
-                    '" . $connection -> real_escape_string($inputEmail) . "',
-                    '" . $connection -> real_escape_string($inputName) . "',
+                    0,
+                    0,
+                    '" . $mysql -> real_escape_string($inputEmail) . "',
+                    '" . $mysql -> real_escape_string($inputName) . "',
                     '" . hash('sha512', $inputPassword) . "',
-                    '" . $connection -> real_escape_string($inputMajor) . "',
-                    '" . $connection -> real_escape_string($inputMinor) . "',
-                    '" . $connection -> real_escape_string($inputPosition) . "',
-                    '0')"
+                    '" . $mysql -> real_escape_string($inputMajor) . "',
+                    '" . $mysql -> real_escape_string($inputMinor) . "',
+                    '" . $mysql -> real_escape_string($inputPosition) . "',
+                    '0');
+                UPDATE Users
+                SET creation_user=LAST_INSERT_ID(), update_user=LAST_INSERT_ID()
+                WHERE id=LAST_INSERT_ID();
+                COMMIT;
+                SET AUTOCOMMIT=1;"
             );
             
             if (!$insertStatement)
             {
                 $errors[] = 'Something went wrong while registering.  Please try again.';
-                $errors[] = '[DEBUG]: MySQL Error: ' . $connection -> error;
+                $errors[] = '[DEBUG]: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
             }
             else //Registration successful
             {
@@ -184,7 +193,7 @@
                             
                             <div class="row">
                                 <div class="col-sm-4"><span class="label">EOU Email</span></div>
-                                <div class="col-sm-8"><input type="text" name="email" value="<?php echo htmlspecialchars($inputEmail); ?>"></div>
+                                <div class="col-sm-8"><input type="email" name="email" value="<?php echo htmlspecialchars($inputEmail); ?>"></div>
                             </div>
                             
                             <div class="row">

@@ -20,22 +20,22 @@
         if (!isset($_POST['password']) or $_POST['password'] == '')
             $errors[] = 'You must enter a password.';
         
-        $savedEmail = $connection -> real_escape_string($_POST['email']);
+        $savedEmail = $mysql -> real_escape_string($_POST['email']);
         
         if (empty($errors)) //No errors, log in!
         {            
-            $loginQuery = $connection -> query(
+            $loginQuery = $mysql -> query(
                 "SELECT *
                  FROM Users
-                 WHERE email = '" . $connection -> real_escape_string($_POST['email']) . "'
+                 WHERE email = '" . $mysql -> real_escape_string($_POST['email']) . "'
                  AND password_hash = '" . hash('sha512', $_POST['password']) . "'"
             );
             
             if (!$loginQuery) //If the query failed
             {
-                //die($connection -> error_get_last());
+                //die($mysql -> error_get_last());
                 $errors[] = 'Something went wrong while logging in.  Please try again.';
-                $errors[] = $connection -> error;
+                $errors[] = $mysql -> error;
             }
             else if ($loginQuery -> num_rows < 1) //No user with that email and password
             {
@@ -84,7 +84,7 @@
                         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
                             <div class="row">
                                 <div class="col-sm-4"><span class="label">EOU Email</span></div>
-                                <div class="col-sm-8"><input type="text" name="email" autofocus value="<?php echo htmlspecialchars($savedEmail); ?>"></div>
+                                <div class="col-sm-8"><input type="email" name="email" autofocus value="<?php echo htmlspecialchars($savedEmail); ?>"></div>
                             </div>
                             
                             <div class="row">

@@ -8,10 +8,10 @@
     $password = '***REMOVED***';
     $database = 'eou_website';
     
-    //Create Connection
-    $connection = new mysqli($server, $username, $password, $database);
+    //Create MySQL Connection
+    $mysql = new mysqli($server, $username, $password, $database);
     
-    //Check Connection
-    if ($connection -> connect_error)
-    die('Connection failed: ' . $connection -> connect_error);
+    //Check MySQL Connection
+    if ($mysql -> connect_error)
+    die('Connection failed: ' . $mysql -> connect_error);
 ?>
