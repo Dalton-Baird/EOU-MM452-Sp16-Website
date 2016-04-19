@@ -56,12 +56,37 @@
             //All variables except the non-required ones are guaranteed to be set at this point
             
             //if (!ctype_graph($inputName))
-            if (preg_match('^([ \\u00c0-\\u01ffa-zA-Z\\\'\-.])+$', $inputName)) //Raw Regex: ^([ \u00c0-\u01ffa-zA-Z'\-.])+$
-                $errors[] = 'Your name can only contain graphical characters.';
+            
+            $usernameRegex = '/^([ \\x{00c0}-\\x{01ff}a-zA-Z\\\'\-.])+$/u';
+            
+            if (!preg_match($usernameRegex, $inputName)) //Raw Regex: ^([ \u00c0-\u01ffa-zA-Z'\-.])+$
+                $errors[] = 'Your name does not match the required format.<br>Format Regex: <pre style="display: inline;">' . htmlspecialchars($usernameRegex) . '</pre>';
             
             if (strlen($inputName) < 3 or strlen($inputName) > 45)
                 $errors[] = 'Your name must be 3 - 45 characters in length.';
             
+            if (filter_var($inputEmail, FILTER_VALIDATE_EMAIL) === false)
+                $errors[] = 'Your email address is invalid.';
+            
+            if (strlen($inputEmail) < 5 or strlen($inputEmail) > 45)
+                $errors[] = 'Your email address must be 5 - 45 characters in length.';
+            
+            if ($inputPassword != $inputPasswordConfirm)
+                $errors[] = 'Your passwords do not match.';
+            
+            if (strlen($inputMajor) > 45)
+                $errors[] = 'Your major must be 0 - 45 characters in length.';
+            
+            if (strlen($inputMinor) > 45)
+                $errors[] = 'Your minor must be 0 - 45 characters in length.';
+            
+            if (strlen($inputPosition) > 45)
+                $errors[] = 'Your position must be 0 - 45 characters in length.';
+        }
+        
+        //Check if name and email are available
+        if (empty($errors))
+        {
             //Check if name is taken
             $userQuery = $mysql -> query(
                 "SELECT *
@@ -84,12 +109,6 @@
                 $successes[] = 'That name is available!';
             }
             
-            if (filter_var($inputEmail, FILTER_VALIDATE_EMAIL) === false)
-                $errors[] = 'Your email address is invalid.';
-            
-            if (strlen($inputEmail) < 5 or strlen($inputEmail) > 45)
-                $errors[] = 'Your email address must be 5 - 45 characters in length.';
-            
             //Check if email is taken
             $emailQuery = $mysql -> query(
                 "SELECT *
@@ -111,22 +130,11 @@
             {
                 $successes[] = 'That email is able to be registered!';
             }
-            
-            if ($inputPassword != $inputPasswordConfirm)
-                $errors[] = 'Your passwords do not match.';
-            
-            if (strlen($inputMajor) > 45)
-                $errors[] = 'Your major must be 0 - 45 characters in length.';
-            
-            if (strlen($inputMinor) > 45)
-                $errors[] = 'Your minor must be 0 - 45 characters in length.';
-            
-            if (strlen($inputPosition) > 45)
-                $errors[] = 'Your position must be 0 - 45 characters in length.';
         }
         
         if (empty($errors)) //No errors, register!
-        {            
+        {   
+            /* OLD VERSION
             $insertStatement = $mysql -> multi_query(
                 "SET AUTOCOMMIT=0;
                 START TRANSACTION;
@@ -160,6 +168,62 @@
             else //Registration successful
             {
                 $successes[] = 'Registration successful!  You may now <a href="/login.php">Log In</a>.';
+            }
+            */
+            
+            /*
+            //DEBUG
+            $userLevelQuery = $mysql -> query("
+                SELECT level_number
+                FROM UserLevels
+                WHERE name='User'"
+            );
+            
+            $successes[] = 'UserLevelQuery Result: \'' . ($userLevelQuery -> fetch_assoc())['level_number'] . '\'.  UserLevelQuery: ' . ($userLevelQuery ? 'success' : 'failure') . '.';
+            */
+            
+            $mysql -> query("START TRANSACTION");
+            
+            $insertStatement = $mysql -> query("
+                INSERT INTO
+                    Users (creation_date, update_date, email, name, password_hash, major, minor, position, user_level)
+                VALUES (
+                    NOW(),
+                    NOW(),
+                    '" . $mysql -> real_escape_string($inputEmail) . "',
+                    '" . $mysql -> real_escape_string($inputName) . "',
+                    '" . hash('sha512', $inputPassword) . "',
+                    '" . $mysql -> real_escape_string($inputMajor) . "',
+                    '" . $mysql -> real_escape_string($inputMinor) . "',
+                    '" . $mysql -> real_escape_string($inputPosition) . "',
+                    (SELECT level_number
+                     FROM UserLevels
+                     WHERE name='User'))"
+            );
+            
+            if (!$insertStatement)
+                $errors[] = '[DEBUG]: Insert Statement: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
+            
+            $updateStatement = $mysql -> query("
+                UPDATE Users
+                SET creation_user=LAST_INSERT_ID(), update_user=LAST_INSERT_ID()
+                WHERE id=LAST_INSERT_ID()"
+            );
+            
+            if (!$updateStatement)
+                $errors[] = '[DEBUG]: Update Statement: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
+            
+            if ($insertStatement and $updateStatement)
+            {
+                $mysql -> query("COMMIT");
+                $successes[] = 'Registration successful!  You may now <a href="/login.php">Log In</a>.';
+            }
+            else
+            {
+                //$errors[] = '[DEBUG]: Insert Statement: ' . ($insertStatement ? 'success' : 'failure'). ', Update Statement: ' . ($updateStatement ? 'success' : 'failure') . '.<br>MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
+                $rollbackStatement = $mysql -> query("ROLLBACK");
+                $errors[] = '[DEBUG]: Insert Statement: ' . ($insertStatement ? 'success' : 'failure') . ', Update Statement: ' . ($updateStatement ? 'success' : 'failure') . '. Database rollback: ' . ($updateStatement ? 'success' : 'failure') . '.';
+                $errors[] = 'Something went wrong while registering.  Please try again.';
             }
         }
     }
