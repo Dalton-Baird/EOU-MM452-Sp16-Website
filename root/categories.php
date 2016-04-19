@@ -1,3 +1,12 @@
+<?php
+    session_start();
+    require_once('/fragments/connect.php');
+            
+    $categoryQuery = $connection -> query(
+        "SELECT *
+         FROM categories
+         WHERE deleted=FALSE");
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -21,7 +30,45 @@
                         </div>
                         
                         <div>
-                            
+                            <?php
+                                if (!$categoryQuery)
+                                {
+                                    echo 'Couldn\'t retrieve categories from the database.  Please try again.<br>';
+                                    echo '[DEBUG]: MySQL Error: ' . $connection -> error_get_last();
+                                }
+                                else
+                                {
+                                    if ($categoryQuery -> num_rows < 1)
+                                    {
+                                        echo 'There are no categories yet';
+                                    }
+                                    else
+                                    {
+                                        //Prepare to display categories
+                                        echo '
+                                        <table border="1" cellspacing="0">
+                                            <tr>
+                                                <th>Category</th>
+                                                <th>Last Topic</th>
+                                            </tr>
+                                        ';
+                                        
+                                        while ($categoryRow = $categoryQuery -> fetch_assoc())
+                                        {
+                                            echo '<tr>';
+                                                echo '<td>';
+                                                    echo $categoryRow;
+                                                echo '</td>';
+                                                echo '<td>';
+                                                    echo 'TODO';
+                                                echo '</td>';
+                                        }
+                                        
+                                        //End displaying categories
+                                        echo '</table>';
+                                    }
+                                }
+                            ?>
                         </div>
                         
                     </div>
