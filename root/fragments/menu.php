@@ -58,7 +58,7 @@
     $menuItems[] = new MenuItem('Faculty', 'instructor', 'menu-faculty', 3, array('Staff Directory'=>'https://www.eou.edu/cas/directory/', 'Dean\'s Office'=>'https://www.eou.edu/cas/deansoffice/', 'More'=>'https://www.eou.edu/faculty/'));
     $menuItems[] = new MenuItem('Academics', 'cap', 'menu-acaemics', 3, array('Course Schedule'=>'https://banweb.ous.edu/eouprd/owa/bwckschd.p_disp_dyn_sched', 'On Campus Programs'=>'https://www.eou.edu/academics/on-campus-majors-and-minors/', 'Online Programs'=>'https://www.eou.edu/academics/online-majors-and-minors/', 'Graduate Programs'=>'https://www.eou.edu/academics/graduate/', 'Academic Catalog'=>'https://drive.google.com/a/eou.edu/file/d/0B-844eoNzbWAOEt2amF5aFhudUU/view?usp=sharing', 'Program Check Sheets'=>'https://www.eou.edu/advising/2016-17-program-checksheets/', 'More'=>'https://www.eou.edu/academics/'));
     $menuItems[] = new MenuItem('Information', 'info', 'menu-info', 3, array('Final Exam Schedule'=>'https://www.eou.edu/registrar/files/2012/05/Final-Exam-Schedule.pdf', 'News'=>'https://www.eou.edu/news/'));
-    $menuItems[] = new MenuItem('Other', 'other', 'menu-other', 3, array('DEBUG: View PHP Session Variables'=>'/debugViewSession.php'));
+    $menuItems[] = new MenuItem('Other', 'other', 'menu-other', 3, array('DEBUG: View PHP Session Variables'=>'/debugViewSession.php', 'DEBUG: Clear PHP Session Variables'=>'/debugClearSession.php'));
 ?>
 
 <div class="row spacing-margin-top-1 spacing-margin-left-half spacing-height-3" id="menu-buttons-row">

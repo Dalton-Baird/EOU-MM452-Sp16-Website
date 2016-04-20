@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <?php include 'fragments/header.php'; ?>
+        <?php include '/fragments/header.php'; ?>
         <title>PHP Session Debug</title>
         
         <style>
@@ -37,7 +37,7 @@
     </head>
     <body>
         <div class="container-fluid">
-            <?php include 'fragments/menu.php'; ?>
+            <?php include '/fragments/menu.php'; ?>
         </div>
         
         <div class="container">
@@ -70,6 +70,6 @@
             </div>
         </div>
         
-        <?php include 'fragments/footer-scripts.php'; ?>
+        <?php include '/fragments/footer-scripts.php'; ?>
     </body>
 </html>

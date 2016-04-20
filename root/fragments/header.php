@@ -7,8 +7,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#333333">
 
-<link href="stylesheets/site.css" rel="stylesheet" type="text/css">
-<link href="stylesheets/positioning.css" rel="stylesheet" type="text/css">
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="stylesheets/bootstrap-columns.css" rel="stylesheet" type="text/css">
-<link rel="icon" href="favicon.ico">
+<link href="/stylesheets/site.css" rel="stylesheet" type="text/css">
+<link href="/stylesheets/positioning.css" rel="stylesheet" type="text/css">
+<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/stylesheets/bootstrap-columns.css" rel="stylesheet" type="text/css">
+<link rel="icon" href="/favicon.ico">
