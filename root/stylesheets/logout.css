@@ -1,0 +1,16 @@
+.logout-container {
+    background-color: #555555;
+    color: #CCCCCC;
+    padding: calc(100vw * 1/47);
+    margin-top: 20vh;
+    font-size: 1.2em;
+}
+
+.logout-header {
+    /*margin: calc(100vw * 1/47);*/
+    text-align: center;
+}
+
+.logout-container .row {
+    padding: calc(100vw * 1/47/4);
+}

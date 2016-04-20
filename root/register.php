@@ -199,7 +199,7 @@
                 <div class="col-sm-8 col-sm-offset-2">
                     <div class="register-container">
                         
-                        <h1 class="register-header">EOU Forum Registration</h1>
+                        <h1 class="register-header">EOU Account Registration</h1>
                         
                         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
                             <div class="row">

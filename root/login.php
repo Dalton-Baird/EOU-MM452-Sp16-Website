@@ -66,7 +66,7 @@
         <?php include 'fragments/header.php'; ?>
         <link href="stylesheets/forum.css" rel="stylesheet" type="text/css">
         <link href="stylesheets/login.css" rel="stylesheet" type="text/css">
-        <title>EOU Forum Login</title>
+        <title>EOU Login</title>
     </head>
     <body>
         <div class="container-fluid">
@@ -79,7 +79,7 @@
                 <div class="col-sm-8 col-sm-offset-2">
                     <div class="login-container">
                         
-                        <h1 class="login-header">EOU Forum Login</h1>
+                        <h1 class="login-header">EOU Login</h1>
                         
                         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
                             <div class="row">

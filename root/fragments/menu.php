@@ -48,12 +48,33 @@
         }
     }
     
+    //Set up variables
+    $loggedIn = false;
+    $userLinks = array();
+    
+    if (session_status() == PHP_SESSION_NONE) //Start a session if it hasn't been started yet
+        session_start();
+    
+    if (isset($_SESSION['loggedIn']) and $_SESSION['loggedIn'] == true)
+    {
+        $loggedIn = true;
+        
+        $userLinks['Logout'] = '/logout.php';
+        $userLinks['Manage Account'] = '#';
+    }
+    else
+    {
+        $userLinks['Login'] = '/login.php';
+        $userLinks['Register'] = '/register.php';
+    }
+    
     //Initialize Menu Items
     $menuItems = array();
     
     $menuItems[] = new SearchBarMenuItem('Search EOU', 'search', 'search-row', 4);
     $menuItems[] = new LinkMenuItem('Home', 'home', '/');
     $menuItems[] = new LinkMenuItem('EOU Forum', 'chat', '/categories.php');
+    $menuItems[] = new MenuItem('User Menu', 'user', 'menu-user', 3, $userLinks);
     $menuItems[] = new MenuItem('Students', 'backpack', 'menu-students', 3, array('Canvas'=>'https://eou.instructure.com/', 'Email'=>'http://gmail.eou.edu/', 'Webster'=>'https://banweb.ous.edu/eouprd/owa/twbkwbis.P_WWWLogin', 'Academic Programs'=>'https://www.eou.edu/academics/', 'Student Services'=>'https://www.eou.edu/sse/', 'Learning Center'=>'https://www.eou.edu/lcenter/', 'Advising'=>'https://www.eou.edu/advising/', 'More'=>'https://www.eou.edu/students/'));
     $menuItems[] = new MenuItem('Faculty', 'instructor', 'menu-faculty', 3, array('Staff Directory'=>'https://www.eou.edu/cas/directory/', 'Dean\'s Office'=>'https://www.eou.edu/cas/deansoffice/', 'More'=>'https://www.eou.edu/faculty/'));
     $menuItems[] = new MenuItem('Academics', 'cap', 'menu-acaemics', 3, array('Course Schedule'=>'https://banweb.ous.edu/eouprd/owa/bwckschd.p_disp_dyn_sched', 'On Campus Programs'=>'https://www.eou.edu/academics/on-campus-majors-and-minors/', 'Online Programs'=>'https://www.eou.edu/academics/online-majors-and-minors/', 'Graduate Programs'=>'https://www.eou.edu/academics/graduate/', 'Academic Catalog'=>'https://drive.google.com/a/eou.edu/file/d/0B-844eoNzbWAOEt2amF5aFhudUU/view?usp=sharing', 'Program Check Sheets'=>'https://www.eou.edu/advising/2016-17-program-checksheets/', 'More'=>'https://www.eou.edu/academics/'));
