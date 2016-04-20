@@ -1,5 +1,5 @@
 <div class="row spacing-margin-top-1 spacing-margin-left-half spacing-height-3" id="menu-buttons-row">
-    <div class="col-xs-5">
+    <div class="col-xs-5 <?php if (basename($_SERVER['PHP_SELF']) != 'index.php') { echo 'menu-buttons-row-background'; } ?>">
         <button class="menu-button color-white spacing-width-1 spacing-height-1"                       data-toggle="tooltip" data-placement="bottom" title="Search EOU" style="background-image: url('icons/search.svg')" onclick="$('.menu-hideable').not('#search-row').hide(); $('#search-row').toggle(); $('#searchbox').focus();"/>
         <button class="menu-button color-white spacing-width-1 spacing-height-1 spacing-margin-left-1" data-toggle="tooltip" data-placement="bottom" title="Home" style="background-image: url('icons/home.svg')" onclick="window.location.href = '/';"/>
         <button class="menu-button color-white spacing-width-1 spacing-height-1 spacing-margin-left-1" data-toggle="tooltip" data-placement="bottom" title="EOU Forum" style="background-image: url('icons/chat.svg')" onclick="window.location.href = '/categories.php';"/>

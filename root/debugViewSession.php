@@ -8,6 +8,10 @@
         <title>PHP Session Debug</title>
         
         <style>
+            .container {
+                margin-top: 20vh;
+            }
+            
             .content {
                 background-color: #555555;
                 color: #EEEEEE;

@@ -385,7 +385,18 @@ body {
 }
 
 #menu-buttons-row {
-    /* position: absolute; TODO: get the menu to stay on screen at all times */
+    position: fixed; /* TODO: get the menu to stay on screen at all times */
+    width: 100%;
+    z-index: 10;
+}
+
+/* Style the menu buttons row when it is not on the main page */
+.menu-buttons-row-background {
+    background-color: #333333;
+    padding: calc(100vw * 1/47/2);
+    border-radius: calc(100vw * 1/47/2);
+    opacity: 0.7;
+    margin-top: calc(0px - (100vw * 1/47/2)); /* Shift it back up due to the added padding */
 }
 
 /* Coloring */
