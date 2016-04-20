@@ -117,5 +117,7 @@
             </div>
             
         </div>
+        
+        <?php include 'fragments/footer-scripts.php'; ?>
     </body>
 </html>
