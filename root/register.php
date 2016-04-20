@@ -133,55 +133,7 @@
         }
         
         if (empty($errors)) //No errors, register!
-        {   
-            /* OLD VERSION
-            $insertStatement = $mysql -> multi_query(
-                "SET AUTOCOMMIT=0;
-                START TRANSACTION;
-                BEGIN;
-                INSERT INTO
-                    Users (creation_date, update_date, creation_user, update_user, email, name, password_hash, major, minor, position, user_level)
-                VALUES (
-                    NOW(),
-                    NOW(),
-                    0,
-                    0,
-                    '" . $mysql -> real_escape_string($inputEmail) . "',
-                    '" . $mysql -> real_escape_string($inputName) . "',
-                    '" . hash('sha512', $inputPassword) . "',
-                    '" . $mysql -> real_escape_string($inputMajor) . "',
-                    '" . $mysql -> real_escape_string($inputMinor) . "',
-                    '" . $mysql -> real_escape_string($inputPosition) . "',
-                    '0');
-                UPDATE Users
-                SET creation_user=LAST_INSERT_ID(), update_user=LAST_INSERT_ID()
-                WHERE id=LAST_INSERT_ID();
-                COMMIT;
-                SET AUTOCOMMIT=1;"
-            );
-            
-            if (!$insertStatement)
-            {
-                $errors[] = 'Something went wrong while registering.  Please try again.';
-                $errors[] = '[DEBUG]: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
-            }
-            else //Registration successful
-            {
-                $successes[] = 'Registration successful!  You may now <a href="/login.php">Log In</a>.';
-            }
-            */
-            
-            /*
-            //DEBUG
-            $userLevelQuery = $mysql -> query("
-                SELECT level_number
-                FROM UserLevels
-                WHERE name='User'"
-            );
-            
-            $successes[] = 'UserLevelQuery Result: \'' . ($userLevelQuery -> fetch_assoc())['level_number'] . '\'.  UserLevelQuery: ' . ($userLevelQuery ? 'success' : 'failure') . '.';
-            */
-            
+        {            
             $mysql -> query("START TRANSACTION");
             
             $insertStatement = $mysql -> query("
