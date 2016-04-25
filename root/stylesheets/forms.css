@@ -1,0 +1,45 @@
+.form-container {
+    background-color: #555555;
+    color: #CCCCCC;
+    padding: calc(100vw * 1/47);
+    margin-top: 20vh;
+}
+
+.form-header {
+    text-align: center;
+}
+
+.form-container .row {
+    padding: calc(100vw * 1/47/4);
+}
+
+.form-container input {
+    height: 36px;
+    width: 100%;
+}
+
+.form-container input:not([type=submit]) {
+    color: #222222;
+}
+
+.form-container input[type=submit] {
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+
+.label {
+    font-size: 1.3em;
+}
+
+.form-errors {
+    color: #FF5555;
+}
+
+.form-successes {
+    color: #55FF55;
+}
+
+.not-required {
+    font-size: 0.9em;
+    color: #888888;
+}
