@@ -185,8 +185,13 @@
     <head>
         <?php include $_SERVER['DOCUMENT_ROOT'] . '/fragments/header.php'; ?>
         <link href="/stylesheets/forum.css" rel="stylesheet" type="text/css">
-        <link href="/stylesheets/register.css" rel="stylesheet" type="text/css">
+        <link href="/stylesheets/forms.css" rel="stylesheet" type="text/css">
         <title>EOU Forum Registration</title>
+        <style>
+            .form-container {
+                margin-bottom: 10vh; <?php /* TODO: Find out how to do this automatically for all forms */ ?>
+            }
+        </style>
     </head>
     <body>
         <div class="container-fluid">
@@ -197,9 +202,9 @@
             
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2">
-                    <div class="register-container">
+                    <div class="form-container">
                         
-                        <h1 class="register-header">EOU Account Registration</h1>
+                        <h1 class="form-header">EOU Account Registration</h1>
                         
                         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
                             <div class="row">
@@ -242,7 +247,7 @@
                             </div>
                         </form>
                         
-                        <div class="register-errors">
+                        <div class="form-errors">
                             <?php
                                 if (!empty($errors))
                                 {
@@ -257,7 +262,7 @@
                             ?>
                         </div>
                         
-                        <div class="register-successes">
+                        <div class="form-successes">
                             <?php
                                 if (!empty($successes))
                                 {

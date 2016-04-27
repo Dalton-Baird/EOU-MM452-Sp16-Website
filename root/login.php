@@ -10,7 +10,7 @@
     {
         //The user is already logged in, redirect to home page
         header("Location: /");
-        exit(); //TODO: Does this work?
+        exit;
     }
     else if ($_SERVER['REQUEST_METHOD'] == 'POST') //Process form data, log in the user
     {
@@ -65,7 +65,7 @@
     <head>
         <?php include $_SERVER['DOCUMENT_ROOT'] . '/fragments/header.php'; ?>
         <link href="/stylesheets/forum.css" rel="stylesheet" type="text/css">
-        <link href="/stylesheets/login.css" rel="stylesheet" type="text/css">
+        <link href="/stylesheets/forms.css" rel="stylesheet" type="text/css">
         <title>EOU Login</title>
     </head>
     <body>
@@ -77,9 +77,9 @@
             
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2">
-                    <div class="login-container">
+                    <div class="form-container">
                         
-                        <h1 class="login-header">EOU Login</h1>
+                        <h1 class="form-header">EOU Login</h1>
                         
                         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
                             <div class="row">
@@ -97,7 +97,7 @@
                             </div>
                         </form>
                         
-                        <div class="login-errors">
+                        <div class="form-errors">
                             <?php
                                 if (!empty($errors))
                                 {

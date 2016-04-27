@@ -12,7 +12,7 @@
 <html>
     <head>
         <?php include $_SERVER['DOCUMENT_ROOT'] . '/fragments/header.php'; ?>
-        <link href="/stylesheets/logout.css" rel="stylesheet" type="text/css">
+        <link href="/stylesheets/forms.css" rel="stylesheet" type="text/css">
         <title>EOU Logout</title>
     </head>
     <body>
@@ -23,11 +23,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
-                    <div class="logout-container">
-                        <h1 class="logout-header">Logged out!</h1>
-                        <p>
-                            You can now <a href="/">return to the home page</a>.
-                        </p>
+                    <div class="form-container">
+                        <h1 class="form-header">Logged out!</h1>
+                        
+                        <p class="label">You can now <a href="/">return to the home page</a>.</p>
                     </div>
                 </div>
             </div>

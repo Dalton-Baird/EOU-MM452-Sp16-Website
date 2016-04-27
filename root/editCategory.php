@@ -1,6 +1,7 @@
 <?php
     session_start();
     require_once($_SERVER['DOCUMENT_ROOT'] . '/fragments/connect.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/fragments/require-moderator.php');
     
     //Variables used when rendering the document:
     $errors = array(); //An array of errors to show the user
