@@ -13,18 +13,28 @@
     padding: calc(100vw * 1/47/4);
 }
 
-.form-container input {
+.form-container input:not([type=checkbox]), .form-container textarea, .form-container select {
     height: 36px;
     width: 100%;
 }
 
-.form-container input:not([type=submit]) {
+.form-container input:not([type=submit]), .form-container textarea, .form-container select {
     color: #222222;
 }
 
 .form-container input[type=submit] {
     margin-top: 10%;
     margin-bottom: 10%;
+}
+
+.form-container textarea {
+    resize: vertical;
+    height: 72px;
+}
+
+.form-container input[type=checkbox] {
+    height: 36px;
+    width: 36px;
 }
 
 .label {
