@@ -1,6 +1,6 @@
 <?php
     session_start();
-    require_once('/fragments/connect.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/fragments/connect.php');
     
     //Variables used when rendering the document:
     $errors = array(); //An array of errors to show the user
@@ -241,14 +241,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <?php include '/fragments/header.php'; ?>
-        <link href="stylesheets/forum.css" rel="stylesheet" type="text/css">
+        <?php include $_SERVER['DOCUMENT_ROOT'] . '/fragments/header.php'; ?>
+        <link href="/stylesheets/forum.css" rel="stylesheet" type="text/css">
         <link href="/stylesheets/forms.css" rel="stylesheet" type="text/css">
         <title>Create Category</title>
     </head>
     <body>
-    <div class="container-fluid">
-        <?php include 'fragments/menu.php'; ?>
+        <div class="container-fluid">
+            <?php include $_SERVER['DOCUMENT_ROOT'] . '/fragments/menu.php'; ?>
         </div>
         
         <div class="container">
@@ -352,6 +352,6 @@
             
         </div>
         
-        <?php include 'fragments/footer-scripts.php'; ?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] . '/fragments/footer-scripts.php'; ?>
     </body>
 </html>

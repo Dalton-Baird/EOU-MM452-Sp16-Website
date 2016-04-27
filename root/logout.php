@@ -11,13 +11,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <?php include '/fragments/header.php'; ?>
-        <link href="stylesheets/logout.css" rel="stylesheet" type="text/css">
+        <?php include $_SERVER['DOCUMENT_ROOT'] . '/fragments/header.php'; ?>
+        <link href="/stylesheets/logout.css" rel="stylesheet" type="text/css">
         <title>EOU Logout</title>
     </head>
     <body>
         <div class="container-fluid">
-            <?php include '/fragments/menu.php'; ?>
+            <?php include $_SERVER['DOCUMENT_ROOT'] . '/fragments/menu.php'; ?>
         </div>
         
         <div class="container">
@@ -33,6 +33,6 @@
             </div>
         </div>
         
-        <?php include '/fragments/footer-scripts.php'; ?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] . '/fragments/footer-scripts.php'; ?>
     </body>
 </html>
