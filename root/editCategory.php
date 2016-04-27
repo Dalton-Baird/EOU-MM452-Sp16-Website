@@ -5,14 +5,54 @@
     //Variables used when rendering the document:
     $errors = array(); //An array of errors to show the user
     $successes = array(); //An array of success messages to show the user
+    $inputID = -1;
     $inputName = '';
     $inputDescription = '';
     $inputParentCategory = '';
     $inputLocked = false;
     
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') //Process form data
+    if ($_SERVER['REQUEST_METHOD'] == 'GET') //Edit category
+    {
+        $categoryID = isset($_GET['id']) ? $_GET['id'] : null;
+        
+        if ($categoryID != null) //Load category for editing
+        {
+            $loadCategoryQuery = $mysql -> query(
+                "SELECT *
+                FROM Categories
+                WHERE id = '" . $mysql -> real_escape_string($categoryID) . "'"
+            );
+            
+            if (!$loadCategoryQuery) //If the query failed
+                {
+                    //die($mysql -> error_get_last());
+                    $errors[] = 'Something went wrong while loading the category.  Please try again.';
+                    $errors[] = '[DEBUG]: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
+                }
+                else if ($loadCategoryQuery -> num_rows < 1)
+                {
+                    $errors[] = 'Failed to load data for category with id ' . htmlspecialchars($categoryID) . ', that category was not found!';
+                }
+                else //It was loaded successfully
+                {
+                    $row = $loadCategoryQuery -> fetch_assoc();
+                    
+                    $inputID = (int) $row['id'];
+                    $inputName = $row['name'];
+                    $inputDescription = $row['description'];
+                    $inputParentCategory = $row['parent_category']; //If this is not numeric, then it is "nothing"
+                    $inputLocked = $row['locked'] == true; //Make sure this converts to boolean
+                    
+                    $successes[] = 'Category with id ' . htmlspecialchars($categoryID) . ' loaded successfully.';
+                }
+        }
+    }    
+    else if ($_SERVER['REQUEST_METHOD'] == 'POST') //Process form data
     {
         //Load variables
+        if (isset($_POST['id']) and is_numeric($_POST['id']))
+            $inputID = (int) $_POST['id'];
+        
         if (isset($_POST['name']))
             $inputName = $_POST['name'];
         
@@ -69,12 +109,26 @@
                 else if ($categoryQuery0 -> num_rows > 0) //That name is already taken
                 {
                     $successes[] = 'That parent category was found!';
-                    $parentCategoryID = $categoryQuery0['id'];
+                    $parentCategoryID = $categoryQuery0 -> fetch_assoc()['id'];
                 }
                 else
                 {
                     $errors[] = 'That parent category cannot be found! (maybe it was deleted).';
                 }
+            }
+            else if ($inputParentCategory == 'None' or $inputParentCategory == 'none')
+            {
+                $inputParentCategory = null; //Set it to null, for the create / update code below
+            }
+            else
+            {
+                $errors[] = 'Invalid parent category "' . htmlspecialchars($inputParentCategory) . '"';
+            }
+            
+            //Check if parent category ID is same ID
+            if ($parentCategoryID != -1 and $parentCategoryID == $inputID)
+            {
+                $errors[] = 'You cannot set a category\'s parent category to itself!';
             }
             
             //Check if name is taken
@@ -82,7 +136,8 @@
                 "SELECT *
                  FROM Categories
                  WHERE name = '" . $mysql -> real_escape_string($inputName) . "'
-                 AND parent_category " . ($parentCategoryID == -1 ? "IS NULL" : "= '" . $mysql -> real_escape_string($parentCategoryID) . "'")
+                 AND parent_category " . ($parentCategoryID == -1 ? "IS NULL" : "= '" . $mysql -> real_escape_string($parentCategoryID) . "'") . "
+                 AND id <> " . $mysql -> real_escape_string($inputID)
             );
             
             if (!$categoryQuery1) //If the query failed
@@ -99,8 +154,89 @@
             {
                 $successes[] = 'That category name is available!';
             }
+            
+            //Check if ID exists, but only if it is numeric and isn't the default -1.
+            if (is_numeric($inputID) and $inputID >= 0)
+            {
+                $categoryQuery2 = $mysql -> query(
+                    "SELECT *
+                    FROM Categories
+                    WHERE id = '" . $mysql -> real_escape_string($inputID) . "'"
+                );
+                
+                if (!$categoryQuery2) //If the query failed
+                {
+                    //die($mysql -> error_get_last());
+                    $errors[] = 'Something went wrong while checking for existing category id.  Please try again.';
+                    $errors[] = '[DEBUG]: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
+                }
+                else if ($categoryQuery2 -> num_rows > 0) //That id exists
+                {
+                    $successes[] = 'Category with id ' . htmlspecialchars($inputID) . ' exists!';
+                }
+                else
+                {
+                    $errors[] = 'Cannot edit category with id ' . htmlspecialchars($inputID) . '. That category does not exist!';
+                }
+            }
+        }
+        
+        if (empty($errors)) //No validation errors, create/edit category!
+        {
+            if (is_numeric($inputID) and $inputID >= 0) //Edit category
+            {                
+                $updateStatement = $mysql -> query("
+                    UPDATE Categories
+                    SET
+                        update_date=NOW(),
+                        update_user=" . $mysql -> real_escape_string($_SESSION['user_id']) . ",
+                        parent_category=" . ($inputParentCategory == null ? "NULL" : $mysql -> real_escape_string($inputParentCategory)) . ",
+                        name='" . $mysql -> real_escape_string($inputName) . "',
+                        description='" . $mysql -> real_escape_string($inputDescription) . "',
+                        locked=b'" . $mysql -> real_escape_string($inputLocked) . "'
+                    WHERE id=" . $mysql -> real_escape_string($inputID));
+                
+                if (!$updateStatement)
+                {
+                    $errors[] = 'Something went wrong while updating the category.  Please try again.';
+                    $errors[] = '[DEBUG]: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
+                }
+                else
+                {
+                    $successes[] = 'Category updated!';
+                }
+            }
+            else //Create Category
+            {                
+                $insertStatement = $mysql -> query("
+                    INSERT INTO
+                        Categories (creation_date, update_date, creation_user, update_user, parent_category, name, description, locked)
+                    VALUES (
+                        NOW(),
+                        NOW(),
+                        " . $mysql -> real_escape_string($_SESSION['user_id']) . ",
+                        " . $mysql -> real_escape_string($_SESSION['user_id']) . ",
+                        " . ($inputParentCategory == null ? "NULL" : $mysql -> real_escape_string($inputParentCategory)) . ",
+                        '" . $mysql -> real_escape_string($inputName) . "',
+                        '" . $mysql -> real_escape_string($inputDescription) . "',
+                        b'" . $mysql -> real_escape_string($inputLocked) . "'
+                    )");
+                
+                if (!$insertStatement)
+                {
+                    $errors[] = 'Something went wrong while creating the category.  Please try again.';
+                    $errors[] = '[DEBUG]: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
+                }
+                else
+                {
+                    $successes[] = 'Category created!';
+                }
+            }
         }
     }
+        
+    //Calculate other variables for the page to use
+    $pageAction = (is_numeric($inputID) and $inputID >= 0) ? 'Update' : 'Create';
 ?>
 <!DOCTYPE html>
 <html>
@@ -121,9 +257,11 @@
                 <div class="col-sm-8 col-sm-offset-2">
                     <div class="form-container">
                         
-                        <h1 class="form-header">Create Forum Category</h1>
+                        <h1 class="form-header"><?php echo "$pageAction Forum Category"; ?></h1>
                         
                         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" autocomplete="off">
+                            <input type="hidden" name="id" value="<?php echo htmlspecialchars($inputID); ?>">
+                            
                             <div class="row">
                                 <div class="col-sm-4"><span class="label">Name</span></div>
                                 <div class="col-sm-8"><input type="text" name="name" autofocus value="<?php echo htmlspecialchars($inputName); ?>"></div>
@@ -155,7 +293,12 @@
                                             else
                                             {
                                                 while ($categoryRow = $categoryQuery -> fetch_assoc())
-                                                    echo '<option value="' . htmlspecialchars($categoryRow['id']) . '">' . htmlspecialchars($categoryRow['name']) . '</option>';
+                                                {
+                                                    if ($categoryRow['id'] == $inputID) //Don't generate an option for the category we're editing
+                                                        continue;
+                                                    
+                                                    echo '<option value="' . htmlspecialchars($categoryRow['id']) . '"' . ($categoryRow['id'] == $inputParentCategory ? ' selected' : '') . '>' . htmlspecialchars($categoryRow['name']) . '</option>';
+                                                }
                                             }
                                         ?>
                                         
@@ -169,7 +312,7 @@
                             </div>
                             
                             <div class="row">
-                                <div class="col-sm-6 col-sm-offset-3"><input class="main-button color-white background-blue reset-font-size" type="submit" value="Create Category"></div>
+                                <div class="col-sm-6 col-sm-offset-3"><input class="main-button color-white background-blue reset-font-size" type="submit" value="<?php echo "$pageAction Category"; ?>"></div>
                             </div>
                         </form>
                         
@@ -177,7 +320,7 @@
                             <?php
                                 if (!empty($errors))
                                 {
-                                    echo 'Errors creating category:';
+                                    echo 'Errors editing category:';
                                     echo '<ul>';
                                     
                                     foreach ($errors as $key => $value)

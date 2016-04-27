@@ -57,7 +57,7 @@
                                         {
                                             echo '<tr>';
                                                 echo '<td>';
-                                                    echo $categoryRow;
+                                                    echo $categoryRow['name'];
                                                 echo '</td>';
                                                 echo '<td>';
                                                     echo 'TODO';
