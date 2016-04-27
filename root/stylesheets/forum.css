@@ -18,3 +18,31 @@
 .reset-font-size {
     font-size: initial;
 }
+
+.category-table {
+    width: 100%;
+    background-color: #888888;
+    color: #EEEEEE;
+}
+
+.category-table th {
+    /*background-color: #666666;*/
+    /*border-color: #606060 !important;*/
+}
+
+.category-table td, .category-table th {
+    padding: calc(100vw * 1/47/2);
+}
+
+.category-table, .category-table th, .category-table td {
+    border: 2px solid #666666;
+    font-size: 1.1em;
+}
+
+.category-table th.category-table-header-category {
+    width: 60%;
+}
+
+.category-table th.category-table-header-edit {
+    width: 10%;
+}

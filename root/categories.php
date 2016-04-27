@@ -1,6 +1,7 @@
 <?php
     session_start();
     require_once($_SERVER['DOCUMENT_ROOT'] . '/fragments/connect.php');
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/php/utils/UserUtils.php';
             
     $categoryQuery = $mysql -> query(
         "SELECT *
@@ -45,23 +46,34 @@
                                     else
                                     {
                                         //Prepare to display categories
-                                        echo '
-                                        <table border="1" cellspacing="0">
+                                        ?>
+                                        <table class="category-table">
                                             <tr>
-                                                <th>Category</th>
-                                                <th>Last Topic</th>
-                                            </tr>
-                                        ';
+                                                <th class="category-table-header-category background-blue">Category</th>
+                                                <th class="background-blue">Last Topic</th>
+                                        <?php
+                                        
+                                        if (UserUtils::isModerator())
+                                        {
+                                            ?><th class="category-table-header-edit background-blue">Edit</th><?php
+                                        }
+                                        
+                                        echo '</tr>';
                                         
                                         while ($categoryRow = $categoryQuery -> fetch_assoc())
                                         {
-                                            echo '<tr>';
-                                                echo '<td>';
-                                                    echo $categoryRow['name'];
-                                                echo '</td>';
-                                                echo '<td>';
-                                                    echo 'TODO';
-                                                echo '</td>';
+                                            ?>
+                                            <tr>
+                                                <td><?php echo htmlspecialchars($categoryRow['name']); ?></td>
+                                                <td>TODO</td>
+                                                <?php
+                                                    if (UserUtils::isModerator())
+                                                    {
+                                                        ?><td><a class="main-button color-white background-orange" href="<?php echo '/editCategory.php?id=' . htmlspecialchars($categoryRow['id']); ?>">Edit</a></td><?php
+                                                    }
+                                                ?>
+                                            </tr>
+                                            <?php
                                         }
                                         
                                         //End displaying categories
