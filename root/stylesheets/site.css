@@ -84,12 +84,26 @@ body {
     z-index: 0;
 }
 
+a.main-button {
+    display: inline-block;
+    border-top: 0.1vw outset;
+    border-right: 0.1vw outset;
+    border-bottom: 0.1vw outset;
+    border-left: 0.1vw outset;
+    /*-webkit-appearance: button;*/
+    overflow: hidden;
+}
+
 .main-button:hover {
     transform: scale(1.05);
+    /*color: inherit;*/
+    text-decoration: inherit;
 }
 
 .main-button:active {
-    transform: scale(0.95)
+    transform: scale(0.95);
+    /*color: inherit;*/
+    text-decoration: inherit;
 }
 
 .menu-button {
@@ -392,61 +406,62 @@ body {
 
 /* Style the menu buttons row when it is not on the main page */
 .menu-buttons-row-background {
-    background-color: #333333;
+    /*background-color: #333333;*/
+    background: rgba(51, 51, 51, 0.7);
     padding: calc(100vw * 1/47/2);
     border-radius: calc(100vw * 1/47/2);
-    opacity: 0.7;
+    /*opacity: 0.7;*/
     margin-top: calc(0px - (100vw * 1/47/2)); /* Shift it back up due to the added padding */
 }
 
 /* Coloring */
 
 .color-white {
-    color: #FFFFFF;
+    color: #FFFFFF !important;
 }
 
 .color-light-grey {
-    color: #CCCCCC;
+    color: #CCCCCC !important;
 }
 
 .background-red {
-    background-color: #96172e;
-    border-color: #aa2b42;
+    background-color: #96172e !important;
+    border-color: #aa2b42 !important;
 }
 
 .background-orange {
-    background-color: #b2541a;
-    border-color: #c6682e;
+    background-color: #b2541a !important;
+    border-color: #c6682e !important;
 }
 
 .background-tan {
-    background-color: #f3cf45;
-    border-color: #ffe359;
+    background-color: #f3cf45 !important;
+    border-color: #ffe359 !important;
 }
 
 .background-green {
-    background-color: #739600;
-    border-color: #87aa14;
+    background-color: #739600 !important;
+    border-color: #87aa14 !important;
 }
 
 .background-gold {
-    background-color: #b88b00;
-    border-color: #cc9f14;
+    background-color: #b88b00 !important;
+    border-color: #cc9f14 !important;
 }
 
 .background-blue {
-    background-color: #385475;
-    border-color: #4c6889;
+    background-color: #385475 !important;
+    border-color: #4c6889 !important;
 }
 
 .background-light-blue {
-    background-color: #0076a3;
-    border-color: #148ab7;
+    background-color: #0076a3 !important;
+    border-color: #148ab7 !important;
 }
 
 .background-brown {
-    background-color: #8c6239;
-    border-color: #a0764d;
+    background-color: #8c6239 !important;
+    border-color: #a0764d !important;
 }
 
 /* Styling */

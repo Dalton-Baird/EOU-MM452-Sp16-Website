@@ -69,7 +69,7 @@
                                                 <?php
                                                     if (UserUtils::isModerator())
                                                     {
-                                                        ?><td><a class="main-button color-white background-orange" href="<?php echo '/editCategory.php?id=' . htmlspecialchars($categoryRow['id']); ?>">Edit</a></td><?php
+                                                        ?><td><a class="main-button color-white background-blue" href="<?php echo '/editCategory.php?id=' . htmlspecialchars($categoryRow['id']); ?>">Edit</a></td><?php
                                                     }
                                                 ?>
                                             </tr>
