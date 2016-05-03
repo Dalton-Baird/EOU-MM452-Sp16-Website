@@ -9,6 +9,7 @@
 
 <link href="/stylesheets/site.css" rel="stylesheet" type="text/css">
 <link href="/stylesheets/positioning.css" rel="stylesheet" type="text/css">
+<link href="/stylesheets/sizing.css" rel="stylesheet" type="text/css">
 <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="/stylesheets/bootstrap-columns.css" rel="stylesheet" type="text/css">
 <link rel="icon" href="/favicon.ico">

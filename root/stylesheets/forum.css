@@ -1,6 +1,6 @@
 .inner-container {
     background-color: #555555;
-    height: 2000px; /* For testing purposes */
+    /* height: 2000px; */ /* For testing purposes */
     color: #CCCCCC;
     margin-top: 15vh;
 }
@@ -13,10 +13,35 @@
     color: #CCCCCC;
     font-size: 2em;
     padding: calc(100vw * 1/47);
+    text-align: center;
 }
 
-.reset-font-size {
-    font-size: initial;
+a.forum-table-name-link:link {
+    color: #EEEEEE;
+    text-decoration: none;
+    transition: all 150ms;
+}
+
+a.forum-table-name-link:visited {
+    color: #EEEEEE;
+    text-decoration: none;
+}
+
+a.forum-table-name-link:hover {
+    color: #FFFFFF;
+    font-size: 1.05em;
+    text-decoration: none;
+}
+
+a.forum-table-name-link:active {
+    color: #CCCCCC;
+    font-size: 1em;
+    text-decoration: none;
+}
+
+.forum-table-name-description {
+    color: #BBBBBB;
+    font-size: 0.8em;
 }
 
 .category-table {
