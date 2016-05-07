@@ -32,6 +32,11 @@
     text-align: center;
 }
 
+.forum-above-content-controls {
+    padding: calc(100vw * 1/47/2);
+    float: right;
+}
+
 a.forum-table-name-link:link {
     color: #EEEEEE;
     text-decoration: none;

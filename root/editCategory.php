@@ -15,6 +15,7 @@
     if ($_SERVER['REQUEST_METHOD'] == 'GET') //Edit category
     {
         $categoryID = isset($_GET['id']) ? $_GET['id'] : null;
+        $parentCategoryID = isset($_GET['parent_category']) ? $_GET['parent_category'] : null;
         
         if ($categoryID != null) //Load category for editing
         {
@@ -25,27 +26,31 @@
             );
             
             if (!$loadCategoryQuery) //If the query failed
-                {
-                    //die($mysql -> error_get_last());
-                    $errors[] = 'Something went wrong while loading the category.  Please try again.';
-                    $errors[] = '[DEBUG]: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
-                }
-                else if ($loadCategoryQuery -> num_rows < 1)
-                {
-                    $errors[] = 'Failed to load data for category with id ' . htmlspecialchars($categoryID) . ', that category was not found!';
-                }
-                else //It was loaded successfully
-                {
-                    $row = $loadCategoryQuery -> fetch_assoc();
-                    
-                    $inputID = (int) $row['id'];
-                    $inputName = $row['name'];
-                    $inputDescription = $row['description'];
-                    $inputParentCategory = $row['parent_category']; //If this is not numeric, then it is "nothing"
-                    $inputLocked = $row['locked'] == true; //Make sure this converts to boolean
-                    
-                    $successes[] = 'Category with id ' . htmlspecialchars($categoryID) . ' loaded successfully.';
-                }
+            {
+                //die($mysql -> error_get_last());
+                $errors[] = 'Something went wrong while loading the category.  Please try again.';
+                $errors[] = '[DEBUG]: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
+            }
+            else if ($loadCategoryQuery -> num_rows < 1)
+            {
+                $errors[] = 'Failed to load data for category with id ' . htmlspecialchars($categoryID) . ', that category was not found!';
+            }
+            else //It was loaded successfully
+            {
+                $row = $loadCategoryQuery -> fetch_assoc();
+                
+                $inputID = (int) $row['id'];
+                $inputName = $row['name'];
+                $inputDescription = $row['description'];
+                $inputParentCategory = $row['parent_category']; //If this is not numeric, then it is "nothing"
+                $inputLocked = $row['locked'] == true; //Make sure this converts to boolean
+                
+                $successes[] = 'Category with id ' . htmlspecialchars($categoryID) . ' loaded successfully.';
+            }
+        }
+        else if ($parentCategoryID != null) //Set parent category ID from URL
+        {
+            $inputParentCategory = $parentCategoryID;
         }
     }    
     else if ($_SERVER['REQUEST_METHOD'] == 'POST') //Process form data

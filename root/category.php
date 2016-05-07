@@ -7,6 +7,7 @@
     $categoryID = null;
     $categoryName = null;
     $categoryDescription = null;
+    $categoryLocked = true;
     
     if ($_SERVER['REQUEST_METHOD'] == 'GET')
     {
@@ -47,6 +48,7 @@
              $categoryName = ForumUtils::findCategoryPath($mysql, $selectedCategoryRow['id']);
              //$categoryName = $selectedCategoryRow['name'];
              $categoryDescription = $selectedCategoryRow['description'];
+             $categoryLocked = $selectedCategoryRow['locked'] == true;
          }
     }
 ?>
@@ -74,6 +76,18 @@
                         
                         <div class="forum-description">
                             <?php echo htmlspecialchars($categoryDescription); ?>
+                        </div>
+                        
+                        <div class="forum-above-content-controls">
+                            
+                            <?php if (UserUtils::isLoggedIn() and !$categoryLocked) { ?>
+                                <a class="main-button color-white background-blue button-normal spacing-margin-left-half" href="/editTopic.php<?php echo $categoryID != null ? '?category=' . htmlspecialchars($categoryID) : ''; ?>">Create Topic</a>
+                            <?php } ?>
+                            
+                            <?php if (UserUtils::isModerator() and $categoryID != null) { ?>
+                                <a class="main-button color-white background-blue button-normal spacing-margin-left-half" href="/editCategory.php?id=<?php echo htmlspecialchars($categoryID); ?>">Edit Category</a>
+                            <?php } ?>
+                            
                         </div>
                         
                         <div>
@@ -134,7 +148,7 @@
                                             <tr>
                                                 <td></td>
                                                 <td></td>
-                                                <td><a class="main-button color-white background-blue button-normal" href="<?php echo '/editCategory.php'; ?>">New</a></td>
+                                                <td><a class="main-button color-white background-blue button-normal" href="<?php echo '/editCategory.php' . ($categoryID != null ? '?parent_category=' . htmlspecialchars($categoryID) : ''); ?>">New</a></td>
                                             </tr>
                                             <?php
                                         }
