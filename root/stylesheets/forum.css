@@ -9,10 +9,26 @@
     height: 200px;
 }
 
-.forum-description {
+.forum-category-title {
     color: #CCCCCC;
     font-size: 2em;
-    padding: calc(100vw * 1/47);
+    padding-top: calc(100vw * 1/47/2);
+    padding-left: calc(100vw * 1/47/2);
+    padding-right: calc(100vw * 1/47/2);
+    text-align: left;
+}
+
+.forum-description {
+    color: #CCCCCC;
+    font-size: 1.5em;
+    padding-bottom: calc(100vw * 1/47);
+    padding-left: calc(100vw * 1/47);
+    padding-right: calc(100vw * 1/47);
+    text-align: center;
+}
+
+.forum-no-categories {
+    padding: calc(100vw * 1/47/2);
     text-align: center;
 }
 

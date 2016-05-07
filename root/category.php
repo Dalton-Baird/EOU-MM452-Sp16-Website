@@ -1,12 +1,54 @@
 <?php
     session_start();
-    require_once($_SERVER['DOCUMENT_ROOT'] . '/fragments/connect.php');
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/fragments/connect.php';
     require_once $_SERVER['DOCUMENT_ROOT'] . '/php/utils/UserUtils.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/php/utils/ForumUtils.php';
+    
+    $categoryID = null;
+    $categoryName = null;
+    $categoryDescription = null;
+    
+    if ($_SERVER['REQUEST_METHOD'] == 'GET')
+    {
+        $categoryID = isset($_GET['id']) ? $_GET['id'] : null;
+    }
             
-    $categoryQuery = $mysql -> query(
+    if ($categoryID == null)
+    {
+        $categoryQuery = $mysql -> query(
         "SELECT *
          FROM categories
-         WHERE deleted=FALSE");
+         WHERE parent_category IS NULL
+         AND deleted=FALSE");
+         
+         $categoryName = ForumUtils::findCategoryPath($mysql, null);
+         $categoryDescription = 'Welcome to the Eastern Oregon University Student Forum.';
+    }
+    else
+    {        
+        $categoryQuery = $mysql -> query(
+        "SELECT *
+         FROM categories
+         WHERE parent_category=" . $mysql -> real_escape_string($categoryID) . "
+         AND deleted=FALSE");
+         
+         //Load information about the selected category
+         $selectedCategoryQuery = $mysql -> query(
+             "SELECT *
+              FROM categories
+              WHERE id=" . $mysql -> real_escape_string($categoryID) . "
+              AND deleted=FALSE"
+         );
+         
+         if ($selectedCategoryQuery and $selectedCategoryQuery -> num_rows > 0)
+         {
+             $selectedCategoryRow = $selectedCategoryQuery -> fetch_assoc();
+             
+             $categoryName = ForumUtils::findCategoryPath($mysql, $selectedCategoryRow['id']);
+             //$categoryName = $selectedCategoryRow['name'];
+             $categoryDescription = $selectedCategoryRow['description'];
+         }
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -26,8 +68,12 @@
                 <div class="col-xs-12">
                     <div class="inner-container">
                         
+                        <div class="forum-category-title">
+                            <?php echo $categoryName; //Don't escape with htmlspecialchars(), as the HTML links are generated ?>
+                        </div>
+                        
                         <div class="forum-description">
-                            Welcome to the Eastern Oregon University Student Forum.
+                            <?php echo htmlspecialchars($categoryDescription); ?>
                         </div>
                         
                         <div>
@@ -41,9 +87,10 @@
                                 {
                                     if ($categoryQuery -> num_rows < 1)
                                     {
-                                        echo 'There are no categories yet';
+                                        ?><div class="forum-no-categories">There are no topics or subcategories yet.</div><?php
                                     }
-                                    else
+                                    //else
+                                    if ($categoryQuery -> num_rows > 0 or UserUtils::isModerator())
                                     {
                                         //Prepare to display categories
                                         ?>
@@ -65,7 +112,7 @@
                                             ?>
                                             <tr>
                                                 <td>
-                                                    <a class="forum-table-name-link" href="#"><?php echo htmlspecialchars($categoryRow['name']); ?></a>
+                                                    <a class="forum-table-name-link" href="/category.php?id=<?php echo htmlspecialchars($categoryRow['id']); ?>"><?php echo htmlspecialchars($categoryRow['name']); ?></a>
                                                     <br>
                                                     <span class="forum-table-name-description"><?php echo htmlspecialchars($categoryRow['description']); ?></span>
                                                 </td>

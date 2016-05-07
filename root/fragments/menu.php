@@ -73,7 +73,7 @@
     
     $menuItems[] = new SearchBarMenuItem('Search EOU', 'search', 'search-row', 4);
     $menuItems[] = new LinkMenuItem('Home', 'home', '/');
-    $menuItems[] = new LinkMenuItem('EOU Forum', 'chat', '/categories.php');
+    $menuItems[] = new LinkMenuItem('EOU Forum', 'chat', '/category.php');
     $menuItems[] = new MenuItem('User Menu', 'user', 'menu-user', 3, $userLinks);
     $menuItems[] = new MenuItem('Students', 'backpack', 'menu-students', 3, array('Canvas'=>'https://eou.instructure.com/', 'Email'=>'http://gmail.eou.edu/', 'Webster'=>'https://banweb.ous.edu/eouprd/owa/twbkwbis.P_WWWLogin', 'Academic Programs'=>'https://www.eou.edu/academics/', 'Student Services'=>'https://www.eou.edu/sse/', 'Learning Center'=>'https://www.eou.edu/lcenter/', 'Advising'=>'https://www.eou.edu/advising/', 'More'=>'https://www.eou.edu/students/'));
     $menuItems[] = new MenuItem('Faculty', 'instructor', 'menu-faculty', 3, array('Staff Directory'=>'https://www.eou.edu/cas/directory/', 'Dean\'s Office'=>'https://www.eou.edu/cas/deansoffice/', 'More'=>'https://www.eou.edu/faculty/'));
