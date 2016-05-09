@@ -257,10 +257,12 @@
             });
 
             //Handle left button
-            $("#nav-left").mousedown(function () {
+            $("#nav-left").on("touchstart mousedown", function (e) {
+                e.preventDefault(); //Prevent another event from firing
                 LEFT_BUTTON_DOWN = true;
             });
-            $("#nav-left").mouseup(function () {
+            $("#nav-left").on("touchend mouseup", function (e) {
+                e.preventDefault(); //Prevent another event from firing
                 LEFT_BUTTON_DOWN = false;
             });
             $("#nav-left").mouseleave(function () {
@@ -268,15 +270,54 @@
             });
 
             //Handle right button
-            $("#nav-right").mousedown(function () {
+            $("#nav-right").on("touchstart mousedown", function (e) {
+                e.preventDefault(); //Prevent another event from firing
                 RIGHT_BUTTON_DOWN = true;
             });
-            $("#nav-right").mouseup(function () {
+            $("#nav-right").on("touchend mouseup", function (e) {
+                e.preventDefault(); //Prevent another event from firing
                 RIGHT_BUTTON_DOWN = false;
             });
             $("#nav-right").mouseleave(function () {
                 RIGHT_BUTTON_DOWN = false;
             });
+            
+            //Swiping (Requires JQuery Mobile)
+            /*$(".boxes-row").on("swipeleft", function(e) {
+                e.preventDefault(); //Prevent another event from firing
+                SCROLL_FORCE -= 5;
+            });
+            
+            //Swiping (Requires JQuery Mobile)
+            $(".boxes-row").on("swiperight", function(e) {
+                e.preventDefault(); //Prevent another event from firing
+                SCROLL_FORCE += 5;
+            });
+            */
+            
+            //Experimental Stuff (Requires JQuery Mobile)
+            
+            var BOXES_TOUCH_MOVE_LAST_X = 0;
+            var BOXES_TOUCH_MOVE_LAST_Y = 0;
+            
+            //Touch move scrolling for the boxes row
+            $(".boxes-row").on("touchmove", function(e) {
+                e.preventDefault(); //Prevent another event from firing
+                
+                //Find the current touch coordinates
+                var currentX = e.originalEvent.touches[0].clientX;
+                var currentY = e.originalEvent.touches[0].clientY;
+                var scrollSpeed = 0.25;
+                
+                //Change the scroll force to scroll
+                SCROLL_FORCE += (currentX - BOXES_TOUCH_MOVE_LAST_X > 0) ? scrollSpeed : -scrollSpeed;
+                
+                //Set the last coordinate variables to the current variables
+                BOXES_TOUCH_MOVE_LAST_X = currentX;
+                BOXES_TOUCH_MOVE_LAST_Y = currentY;
+            });
+            
+            //END Experimental Stuff
 
             //Smooth scrolling
             window.setInterval(function () {
