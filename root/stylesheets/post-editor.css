@@ -1,0 +1,14 @@
+.post-editor-content {
+    height: 128px !important;
+}
+
+.post-editor-toolbar {
+    background-color: #222222;
+    padding: 4px;
+}
+
+.post-editor-toolbar-button {
+    color: #EEEEEE;
+    background-color: transparent;
+    border: none;
+}
