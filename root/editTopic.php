@@ -12,7 +12,7 @@
     $inputLocked = false;
     $inputStickied = false;
     
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/post/postEditorCode.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/post/postEditorValidationCode.php';
     
     if ($_SERVER['REQUEST_METHOD'] == 'GET') //Edit topic
     {
@@ -50,7 +50,7 @@
                 $successes[] = 'Topic with id ' . htmlspecialchars($topicID) . ' loaded successfully.';
             }
         }
-        else if ($categoryID != null) //Set parent category ID from URL
+        else if ($categoryID != null) //Set category ID from URL
         {
             $inputCategory = $categoryID;
         }
@@ -120,7 +120,7 @@
             }
             
             //Check if name is taken
-            $topicQuery1 = $mysql -> query(
+            $topicAlreadyExistsQuery = $mysql -> query(
                 "SELECT *
                  FROM Topics
                  WHERE name = '" . $mysql -> real_escape_string($inputName) . "'
@@ -128,13 +128,13 @@
                  AND id <> " . $mysql -> real_escape_string($inputID)
             );
             
-            if (!$topicQuery1) //If the query failed
+            if (!$topicAlreadyExistsQuery) //If the query failed
             {
                 //die($mysql -> error_get_last());
                 $errors[] = 'Something went wrong while checking for existing topic names.  Please try again.';
                 $errors[] = '[DEBUG]: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
             }
-            else if ($topicQuery1 -> num_rows > 0) //That name is already taken
+            else if ($topicAlreadyExistsQuery -> num_rows > 0) //That name is already taken
             {
                 $errors[] = 'That topic name has already been taken for your specified category.';
             }
@@ -146,19 +146,18 @@
             //Check if ID exists, but only if it is numeric and isn't the default -1.
             if (is_numeric($inputID) and $inputID >= 0)
             {
-                $topicQuery2 = $mysql -> query(
+                $topicIDExistsQuery = $mysql -> query(
                     "SELECT *
                     FROM Topics
                     WHERE id = '" . $mysql -> real_escape_string($inputID) . "'"
                 );
                 
-                if (!$topicQuery2) //If the query failed
+                if (!$topicIDExistsQuery) //If the query failed
                 {
-                    //die($mysql -> error_get_last());
                     $errors[] = 'Something went wrong while checking for existing topic id.  Please try again.';
                     $errors[] = '[DEBUG]: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
                 }
-                else if ($topicQuery2 -> num_rows > 0) //That id exists
+                else if ($topicIDExistsQuery -> num_rows > 0) //That id exists
                 {
                     $successes[] = 'Topic with id ' . htmlspecialchars($inputID) . ' exists!';
                 }
@@ -169,9 +168,9 @@
             }
         }
         
-        if (empty($errors)) //No validation errors, create/edit category!
+        if (empty($errors)) //No validation errors, create/edit topic!
         {
-            if (is_numeric($inputID) and $inputID >= 0) //Edit category
+            if (is_numeric($inputID) and $inputID >= 0) //Edit topic
             {                
                 // $updateStatement = $mysql -> query("
                 //     UPDATE Categories
@@ -194,7 +193,7 @@
                 //     $successes[] = 'Category updated!';
                 // }
             }
-            else //Create Category
+            else //Create Topic
             {                
                 // $insertStatement = $mysql -> query("
                 //     INSERT INTO
@@ -221,6 +220,8 @@
                 // }
             }
         }
+        
+        require_once $_SERVER['DOCUMENT_ROOT'] . '/post/postEditorDBCode.php';
     }
         
     //Calculate other variables for the page to use
