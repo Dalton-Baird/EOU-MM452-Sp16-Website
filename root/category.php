@@ -51,6 +51,23 @@
              $categoryLocked = $selectedCategoryRow['locked'] == true;
          }
     }
+    
+    if ($categoryID == null)
+    {
+        $topicQuery = $mysql -> query(
+            "SELECT *
+             FROM Topics
+             WHERE category IS NULL"
+        );
+    }
+    else
+    {
+        $topicQuery = $mysql -> query(
+            "SELECT *
+             FROM Topics
+             WHERE category=" . $mysql -> real_escape_string($categoryID)
+        );
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -84,6 +101,10 @@
                                 <a class="main-button color-white background-blue button-normal spacing-margin-left-half" href="/editTopic.php<?php echo $categoryID != null ? '?category=' . htmlspecialchars($categoryID) : ''; ?>">Create Topic</a>
                             <?php } ?>
                             
+                            <?php if (UserUtils::isModerator()) { ?>
+                                <a class="main-button color-white background-blue button-normal spacing-margin-left-half" href="/editCategory.php<?php echo $categoryID != null ? '?parent_category=' . htmlspecialchars($categoryID) : ''; ?>">Create Subcategory</a>
+                            <?php } ?>
+                            
                             <?php if (UserUtils::isModerator() and $categoryID != null) { ?>
                                 <a class="main-button color-white background-blue button-normal spacing-margin-left-half" href="/editCategory.php?id=<?php echo htmlspecialchars($categoryID); ?>">Edit Category</a>
                             <?php } ?>
@@ -92,6 +113,9 @@
                         
                         <div>
                             <?php
+                                $hasCategories = false;
+                                $hasTopics = false;
+                            
                                 if (!$categoryQuery)
                                 {
                                     echo 'Couldn\'t retrieve categories from the database.  Please try again.<br>';
@@ -101,11 +125,13 @@
                                 {
                                     if ($categoryQuery -> num_rows < 1)
                                     {
-                                        ?><div class="forum-no-categories">There are no topics or subcategories yet.</div><?php
+                                        ?><div class="forum-no-categories">There are no subcategories yet.</div><?php
                                     }
                                     //else
-                                    if ($categoryQuery -> num_rows > 0 or UserUtils::isModerator())
+                                    if ($categoryQuery -> num_rows > 0)
                                     {
+                                        $hasCategories = true;
+                                        
                                         //Prepare to display categories
                                         ?>
                                         <table class="category-table">
@@ -123,6 +149,27 @@
                                         
                                         while ($categoryRow = $categoryQuery -> fetch_assoc())
                                         {
+                                            $lastTopicID = -1;
+                                            $lastTopicName = 'Unknown Topic';
+                                            $lastTopicUserName = 'Unknown User';
+                                            $lastTopicCreationDate = 'Unknown Date';
+                                            
+                                            //Find the last topic
+                                            $lastTopic = ForumUtils::findLastTopicInCategoryByCategoryID($categoryRow['id']);
+                                            
+                                            if ($lastTopic != null)
+                                            {
+                                                $lastTopicID = $lastTopic['id'];
+                                                $lastTopicName = $lastTopic['name'];
+                                                
+                                                $lastTopicCreationUser = UserUtils::findUserByID($lastTopic['creation_user']);
+                                                
+                                                if ($lastTopicCreationUser != null)
+                                                    $lastTopicUserName = $lastTopicCreationUser['name'];
+                                                
+                                                $lastTopicCreationDate = $lastTopic['creation_date'];                                                
+                                            }
+                                            
                                             ?>
                                             <tr>
                                                 <td>
@@ -131,24 +178,26 @@
                                                     <span class="forum-table-name-description"><?php echo htmlspecialchars($categoryRow['description']); ?></span>
                                                 </td>
                                                 
-                                                <td><a class="forum-table-name-link" href="#">TODO</a></td>
+                                                <td>
+                                                    <?php
+                                                    if ($lastTopicID != -1)
+                                                    { ?>
+                                                        <a class="forum-table-name-link" href="/topic.php?id=<?php echo htmlspecialchars($lastTopicID); ?>"><?php echo htmlspecialchars($lastTopicName); ?></a>
+                                                        <br>
+                                                        <span class="forum-table-name-description">By <?php echo htmlspecialchars($lastTopicUserName); ?></span>
+                                                        <?php
+                                                    }
+                                                    else
+                                                    {
+                                                        echo 'No Topics';
+                                                    } ?>
+                                                </td>
                                                 <?php
                                                     if (UserUtils::isModerator())
                                                     {
                                                         ?><td><a class="main-button color-white background-blue button-normal" href="<?php echo '/editCategory.php?id=' . htmlspecialchars($categoryRow['id']); ?>">Edit</a></td><?php
                                                     }
                                                 ?>
-                                            </tr>
-                                            <?php
-                                        }
-                                        
-                                        if (UserUtils::isModerator()) //Add "Create New" controls
-                                        {
-                                            ?>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td><a class="main-button color-white background-blue button-normal" href="<?php echo '/editCategory.php' . ($categoryID != null ? '?parent_category=' . htmlspecialchars($categoryID) : ''); ?>">New</a></td>
                                             </tr>
                                             <?php
                                         }
@@ -168,6 +217,89 @@
                                         <a class="main-button color-white background-blue button-huge">Test</a>
                                         */
                                     }
+                                }
+                            ?>
+                        </div>
+                        
+                        <div>
+                            <?php
+                                if (!$categoryLocked)
+                                {
+                                    if (!$topicQuery)
+                                    {
+                                        echo 'Couldn\'t retrieve topics from the database.  Please try again.<br>';
+                                        echo '[DEBUG]: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
+                                    }
+                                    else
+                                    {
+                                        if ($topicQuery -> num_rows < 1)
+                                        {
+                                            ?><div class="forum-no-categories">There are no topics yet.</div><?php
+                                        }
+                                        //else
+                                        if ($topicQuery -> num_rows > 0)
+                                        {
+                                            $hasTopics = true;
+                                            
+                                            //Prepare to display categories
+                                            ?>
+                                            <table class="category-table">
+                                                <tr>
+                                                    <th class="category-table-header-category background-blue">Topic</th>
+                                                    <th class="background-blue">Creation Date</th>
+                                                    <th class="background-blue">Last Post By</th>
+                                            <?php
+                                            
+                                            echo '</tr>';
+                                            
+                                            while ($topicRow = $topicQuery -> fetch_assoc())
+                                            {
+                                                $topicCreationUserName = 'Unknown User';
+                                                $lastPostUserName = 'Unknown User';
+                                                $lastPostCreationDate = 'Unknown Date';
+                                                
+                                                //Find information about the topic creation user
+                                                $topicCreationUser = UserUtils::findUserByID($topicRow['creation_user']);
+                                                
+                                                if ($topicCreationUser != null)
+                                                    $topicCreationUserName = $topicCreationUser['name'];
+                                                
+                                                //Find the last post in the topic
+                                                $lastPost = ForumUtils::findLastPostInTopicByTopicID($topicRow['id']);
+                                                
+                                                if ($lastPost != null)
+                                                {
+                                                    $lastPostCreationUser = UserUtils::findUserByID($lastPost['creation_user']);
+                                                    
+                                                    if ($lastPostCreationUser != null)
+                                                        $lastPostUserName = $lastPostCreationUser['name'];
+                                                    
+                                                    $lastPostCreationDate = $lastPost['creation_date'];
+                                                }
+                                                
+                                                ?>
+                                                <tr>
+                                                    <td>
+                                                        <a class="forum-table-name-link" href="/topic.php?id=<?php echo htmlspecialchars($topicRow['id']); ?>"><?php echo htmlspecialchars($topicRow['name']); ?></a>
+                                                        <br>
+                                                        <span class="forum-table-name-description">By <?php echo htmlspecialchars($topicCreationUserName); ?></span>
+                                                    </td>
+                                                    
+                                                    <td><?php echo htmlspecialchars($topicRow['creation_date']); ?></td>
+                                                    <td><a class="forum-table-name-link" href="#"><?php echo htmlspecialchars($lastPostUserName); ?></a></td>
+                                                </tr>
+                                                <?php
+                                            }
+                                            
+                                            //End displaying topics
+                                            echo '</table>';
+                                        }
+                                    }
+                                }
+                                
+                                if (!$hasCategories and !$hasTopics) //No categories or topics
+                                {
+                                    echo '<div>&nbsp;</div>'; //Extra div at the bottom to add padding
                                 }
                             ?>
                         </div>

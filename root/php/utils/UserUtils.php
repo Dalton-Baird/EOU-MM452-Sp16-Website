@@ -28,5 +28,32 @@
             
             return isset($_SESSION['user_level']) and $_SESSION['user_level'] >= 2;
         }
+        
+        /**
+         * Finds a user by their ID.  Returns the MySQL Row for the user, or null.
+         * Param: id: The user's ID
+         * Returns: The MySQL Row for the user, or null if no user exists with that ID.
+         */
+        public static function findUserByID(int $id)
+        {
+            global $mysql;
+            
+            $userQuery = $mysql -> query(
+                "SELECT *
+                 FROM Users
+                 WHERE id=" . $mysql -> real_escape_string($id)
+            );
+            
+            if ($userQuery and $userQuery -> num_rows > 0)
+            {
+                $userRow = $userQuery -> fetch_assoc();
+                
+                return $userRow;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 ?>
