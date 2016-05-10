@@ -172,56 +172,64 @@
         {
             if (is_numeric($inputID) and $inputID >= 0) //Edit topic
             {                
-                // $updateStatement = $mysql -> query("
-                //     UPDATE Categories
-                //     SET
-                //         update_date=NOW(),
-                //         update_user=" . $mysql -> real_escape_string($_SESSION['user_id']) . ",
-                //         parent_category=" . ($inputParentCategory == null ? "NULL" : $mysql -> real_escape_string($inputParentCategory)) . ",
-                //         name='" . $mysql -> real_escape_string($inputName) . "',
-                //         description='" . $mysql -> real_escape_string($inputDescription) . "',
-                //         locked=b'" . $mysql -> real_escape_string($inputLocked) . "'
-                //     WHERE id=" . $mysql -> real_escape_string($inputID));
+                $updateStatement = $mysql -> query("
+                    UPDATE Topics
+                    SET
+                        update_date=NOW(),
+                        update_user=" . $mysql -> real_escape_string($_SESSION['user_id']) . ",
+                        category=" . $mysql -> real_escape_string($inputCategory) . ",
+                        name='" . $mysql -> real_escape_string($inputName) . "',
+                        locked=b'" . $mysql -> real_escape_string($inputLocked) . "',
+                        stickied=b'" . $mysql -> real_escape_string($inputStickied) . "'
+                    WHERE id=" . $mysql -> real_escape_string($inputID));
                 
-                // if (!$updateStatement)
-                // {
-                //     $errors[] = 'Something went wrong while updating the category.  Please try again.';
-                //     $errors[] = '[DEBUG]: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
-                // }
-                // else
-                // {
-                //     $successes[] = 'Category updated!';
-                // }
+                if (!$updateStatement)
+                {
+                    $errors[] = 'Something went wrong while updating the topic.  Please try again.';
+                    $errors[] = '[DEBUG]: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
+                }
+                else
+                {
+                    $successes[] = 'Topic updated!';
+                    $inputTopicID = $inputID; //Set the insertTopicID for the post DB code
+                }
             }
             else //Create Topic
             {                
-                // $insertStatement = $mysql -> query("
-                //     INSERT INTO
-                //         Categories (creation_date, update_date, creation_user, update_user, parent_category, name, description, locked)
-                //     VALUES (
-                //         NOW(),
-                //         NOW(),
-                //         " . $mysql -> real_escape_string($_SESSION['user_id']) . ",
-                //         " . $mysql -> real_escape_string($_SESSION['user_id']) . ",
-                //         " . ($inputParentCategory == null ? "NULL" : $mysql -> real_escape_string($inputParentCategory)) . ",
-                //         '" . $mysql -> real_escape_string($inputName) . "',
-                //         '" . $mysql -> real_escape_string($inputDescription) . "',
-                //         b'" . $mysql -> real_escape_string($inputLocked) . "'
-                //     )");
+                $insertStatement = $mysql -> query("
+                    INSERT INTO
+                        Topics (creation_date, update_date, creation_user, update_user, category, name, locked, stickied)
+                    VALUES (
+                        NOW(),
+                        NOW(),
+                        " . $mysql -> real_escape_string($_SESSION['user_id']) . ",
+                        " . $mysql -> real_escape_string($_SESSION['user_id']) . ",
+                        " . $mysql -> real_escape_string($inputCategory) . ",
+                        '" . $mysql -> real_escape_string($inputName) . "',
+                        b'" . $mysql -> real_escape_string($inputLocked) . "',
+                        b'" . $mysql -> real_escape_string($inputStickied) . "'
+                    )");
                 
-                // if (!$insertStatement)
-                // {
-                //     $errors[] = 'Something went wrong while creating the category.  Please try again.';
-                //     $errors[] = '[DEBUG]: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
-                // }
-                // else
-                // {
-                //     $successes[] = 'Category created!';
-                // }
+                if (!$insertStatement)
+                {
+                    $errors[] = 'Something went wrong while creating the topic.  Please try again.';
+                    $errors[] = '[DEBUG]: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
+                }
+                else
+                {
+                    $successes[] = 'Topic created!';
+                    $inputTopicID = $mysql -> insert_id; //Set the insertTopicID for the post DB code
+                    
+                    if ($inputTopicID === 0) //0 is returned by default if there was no insert
+                        $inputTopicID = -1;
+                }
             }
         }
         
-        require_once $_SERVER['DOCUMENT_ROOT'] . '/post/postEditorDBCode.php';
+        if (empty($errors)) //Only run the post DB code if topic creation was successful
+        {
+            require_once $_SERVER['DOCUMENT_ROOT'] . '/post/postEditorDBCode.php';
+        }
     }
         
     //Calculate other variables for the page to use

@@ -1,5 +1,6 @@
 <?php
     $inputPostID = -1;
+    $inputTopicID = -1;
     $inputPostContent = '';
     
     if ($_SERVER['REQUEST_METHOD'] == 'POST') //Process form data
