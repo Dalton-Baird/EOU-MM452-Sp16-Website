@@ -22,5 +22,8 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-12"><textarea class="post-editor-content" name="postContent"><?php echo htmlspecialchars($inputPostContent); ?></textarea></div>
+    <div class="col-sm-12">
+        <input type="hidden" name="postID" value="<?php echo htmlspecialchars($inputPostID); ?>">
+        <textarea class="post-editor-content" name="postContent"><?php echo htmlspecialchars($inputPostContent); ?></textarea>
+    </div>
 </div>

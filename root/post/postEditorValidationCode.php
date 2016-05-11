@@ -3,6 +3,38 @@
     $inputTopicID = -1;
     $inputPostContent = '';
     
+    if (isset($firstPostTopicID) and $firstPostTopicID != null) //Load first post for editing
+    {
+        $loadPostQuery = $mysql -> query(
+            "SELECT *
+            FROM Posts
+            WHERE topic = '" . $mysql -> real_escape_string($firstPostTopicID) . "'
+            ORDER BY creation_date DESC
+            LIMIT 1"
+        );
+        
+        if (!$loadPostQuery) //If the query failed
+        {
+            //die($mysql -> error_get_last());
+            $errors[] = 'Something went wrong while loading the first post in the topic.  Please try again.';
+            $errors[] = '[DEBUG]: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
+        }
+        else if ($loadPostQuery -> num_rows < 1)
+        {
+            $errors[] = 'Failed to load data for first post for topic with id ' . htmlspecialchars($firstPostTopicID) . ', that topic or post was not found!';
+        }
+        else //It was loaded successfully
+        {
+            $row = $loadPostQuery -> fetch_assoc();
+            
+            $inputPostID = (int) $row['id'];
+            $inputTopicID = (int) $row['topic'];
+            $inputPostContent = $row['post_content'];
+            
+            $successes[] = 'First post for topic with id ' . htmlspecialchars($firstPostTopicID) . ' loaded successfully.';
+        }
+    }
+    
     if ($_SERVER['REQUEST_METHOD'] == 'POST') //Process form data
     {
         //Load variables

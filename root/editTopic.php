@@ -12,7 +12,7 @@
     $inputLocked = false;
     $inputStickied = false;
     
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/post/postEditorValidationCode.php';
+    $firstPostTopicID = null; //First post topic ID, if not null, the post editor will load the first post of the topic with this ID
     
     if ($_SERVER['REQUEST_METHOD'] == 'GET') //Edit topic
     {
@@ -47,6 +47,8 @@
                 $inputLocked = $row['locked'] == true; //Make sure this converts to boolean
                 $inputStickied = $row['stickied'] == true; //Make sure this converts to boolean
                 
+                $firstPostTopicID = $inputID; //This tells the post editor to load the first post for this topic
+                
                 $successes[] = 'Topic with id ' . htmlspecialchars($topicID) . ' loaded successfully.';
             }
         }
@@ -54,8 +56,11 @@
         {
             $inputCategory = $categoryID;
         }
-    }    
-    else if ($_SERVER['REQUEST_METHOD'] == 'POST') //Process form data
+    }
+    
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/post/postEditorValidationCode.php';
+        
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') //Process form data
     {
         //Load variables
         if (isset($_POST['id']) and is_numeric($_POST['id']))
