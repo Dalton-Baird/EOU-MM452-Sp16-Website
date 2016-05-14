@@ -1,0 +1,51 @@
+.header-container {
+    color: #CCCCCC;
+    margin-top: 15vh;
+}
+
+.topic-above-content-controls {
+    padding: calc(100vw * 1/47/2);
+    float: right;
+}
+
+.title {
+    font-size: 1.4em;
+}
+
+.post-column {
+    background-color: #444444;
+    padding: calc(100vw * 1/47/2);
+    border-radius: 2px;
+    color: #CCCCCC;
+    min-height: calc(100vw * 1/47 * 5);
+}
+
+.post-user-column {
+    
+}
+
+.post-content-column {
+    
+}
+
+.post-user-name {
+    text-align: center;
+}
+
+.post-header, .post-footer {
+    color: #999999;
+    font-size: 0.9em;
+}
+
+.post-footer {
+    position: absolute;
+    bottom: calc(100vw * 1/47/2);
+}
+
+.post-right-content {
+    float: right;
+}
+
+.post-content {
+    margin-top: calc(100vw * 1/47/2);
+}
