@@ -60,7 +60,7 @@
         $loggedIn = true;
         
         $userLinks['Logout'] = '/logout.php';
-        $userLinks['Manage Account'] = '#';
+        $userLinks['Manage Account'] = '/editUser.php?id=' . htmlspecialchars($_SESSION['user_id']);
     }
     else
     {
