@@ -55,5 +55,31 @@
                 return null;
             }
         }
+        
+        /**
+         * Finds the path to a user's profile image, given a user's ID. If no image
+         * is found, it returns the default profile image.
+         * Param: id: The user's ID
+         * Returns: The path to the user's profile image
+         */
+        public static function findUserProfileImage(int $id)
+        {
+            if (file_exists($_SERVER['DOCUMENT_ROOT'] . "/images/profile_pictures/profile-$id.gif"))
+            {
+                return "/images/profile_pictures/profile-$id.gif";
+            }
+            else if (file_exists($_SERVER['DOCUMENT_ROOT'] . "/images/profile_pictures/profile-$id.png"))
+            {
+                return "/images/profile_pictures/profile-$id.png";
+            }
+            else if (file_exists($_SERVER['DOCUMENT_ROOT'] . "/images/profile_pictures/profile-$id.jpg"))
+            {
+                return "/images/profile_pictures/profile-$id.jpg";
+            }
+            else
+            {
+                return "/images/profile_pictures/default.png";
+            }
+        }
     }
 ?>

@@ -105,14 +105,20 @@
                         
                         ?>
                         
-                        <div class="row" id="post-<?php echo htmlspecialchars($postNumber); ?>">
-                            <div class="col-xs-3">
+                        <div class="row post-bootstrap-row" id="post-<?php echo htmlspecialchars($postNumber); ?>">
+                            <div class="col-xs-3 post-user-bootstrap-column">
                                 <div class="post-column post-user-column">
                                     <div class="post-user-name"><?php echo htmlspecialchars($postUser['name']) ?></div>
+                                    <img class="post-user-profile-picture" src="<?php echo htmlspecialchars(UserUtils::findUserProfileImage($postUser['id'])); ?>" width="128" height="128" alt="<?php echo htmlspecialchars($postUser['name']); ?>'s Profile Picture">
+                                    <div class="post-user-details">
+                                        <?php if (!empty($postUser['major'])) echo '<div>Major: ' . htmlspecialchars($postUser['major']) . '</div>'; ?>
+                                        <?php if (!empty($postUser['minor'])) echo '<div>Minor: ' . htmlspecialchars($postUser['minor']) . '</div>'; ?>
+                                        <?php if (!empty($postUser['position'])) echo '<div>Position: ' . htmlspecialchars($postUser['position']) . '</div>'; ?>
+                                    </div>
                                 </div>
                             </div>
                             
-                            <div class="col-xs-9">
+                            <div class="col-xs-9 post-content-boostrap-column">
                                 <div class="post-column post-content-column">
                                     
                                     <span class="post-header"><?php echo htmlspecialchars($postUser['name']) . ' at ' . htmlspecialchars($postRow['creation_date']) . ':'; ?></span>
