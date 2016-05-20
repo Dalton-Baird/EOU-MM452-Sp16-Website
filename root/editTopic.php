@@ -310,6 +310,10 @@
                                 <div class="col-sm-8"><input type="checkbox" name="stickied" <?php if ($inputStickied) echo 'checked'; ?> data-toggle="tooltip" title="If checked, the topic will be pinned at the top of the category"></div>
                             </div>
                             
+                            <div class="row">
+                                <div class="col-sm-12"><span class="label">First Post</span></div>
+                            </div>
+                            
                             <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/post/postEditorHTML.php'; ?>
                             
                             <div class="row">

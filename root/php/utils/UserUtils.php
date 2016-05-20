@@ -29,6 +29,18 @@
             return isset($_SESSION['user_level']) and $_SESSION['user_level'] >= 2;
         }
         
+        /** Helper function that returns true if the specified user is a moderator. */
+        public static function isUserModerator($userRow)
+        {
+            return $userRow['user_level'] >= 1;
+        }
+        
+        /** Helper function that returns true if the specified user is an admin. */
+        public static function isUserAdmin($userRow)
+        {
+            return $userRow['user_level'] >= 2;
+        }
+        
         /**
          * Finds a user by their ID.  Returns the MySQL Row for the user, or null.
          * Param: id: The user's ID
@@ -80,6 +92,51 @@
             {
                 return "/images/profile_pictures/default.png";
             }
+        }
+        
+        /**
+         * Finds out if the currently logged in user has permission to edit a post. They would
+         * have permission if they are the user that created the post, or they are a modeator
+         * or admin.
+         * Param: postRow: The SQL row for the post that the user wants to edit
+         * Returns: True if the user can edit the post, false otherwise
+         */
+        public static function canEditPost($postRow)
+        {
+            return UserUtils::isModerator() or $postRow['creation_user'] == $_SESSION['user_id'];
+        }
+        
+        /**
+         * Finds out if a user has permission to edit a post. They would have permission
+         * if they are the user that created the post, or they are a moderator or admin.
+         * Param: userRow: The SQL row for the user
+         * Param: postRow: The SQL row for the post that the user wants to edit
+         * Returns: True if the user can edit the post, false otherwise
+         */
+        public static function canUserEditPost($userRow, $postRow)
+        {
+            return UserUtils::isUserModerator($userRow) or $postRow['creation_user'] == $userRow['id'];
+        }
+        
+        /**
+         * Gets the MySQL row for the given user's user level.
+         * Param: userRow: The SQL object for the user
+         * Returns: The SQL object for the user's level, or null if it could not be found
+         */
+        public static function getUserLevel($userRow)
+        {
+            global $mysql;
+            
+            $userLevelQuery = $mysql -> query(
+                "SELECT *
+                 FROM UserLevels
+                 WHERE level_number=" . $mysql -> real_escape_string($userRow['user_level'])
+            );
+            
+            if (!$userLevelQuery or $userLevelQuery -> num_rows < 1)
+                return null;
+            
+            return $userLevelQuery -> fetch_assoc();
         }
     }
 ?>

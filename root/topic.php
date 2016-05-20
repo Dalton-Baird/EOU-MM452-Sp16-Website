@@ -72,7 +72,7 @@
                     <div class="topic-above-content-controls">
                             
                         <?php if (UserUtils::isLoggedIn() and !$topicLocked) { ?>
-                            <a class="main-button color-white background-blue button-normal spacing-margin-left-half" href="#">Reply</a>
+                            <a class="main-button color-white background-blue button-normal spacing-margin-left-half" href="/editPost.php?topic=<?php echo htmlspecialchars($topicID); ?>">Reply</a>
                         <?php } ?>
                         
                         <?php if ((UserUtils::isModerator() or (UserUtils::isLoggedIn() and $topicCreationUserID == $_SESSION['user_id'])) and $topicID != null) { ?>
@@ -111,6 +111,7 @@
                                     <div class="post-user-name"><?php echo htmlspecialchars($postUser['name']) ?></div>
                                     <img class="post-user-profile-picture" src="<?php echo htmlspecialchars(UserUtils::findUserProfileImage($postUser['id'])); ?>" width="128" height="128" alt="<?php echo htmlspecialchars($postUser['name']); ?>'s Profile Picture">
                                     <div class="post-user-details">
+                                        <?php echo '<div>User Level: ' . htmlspecialchars(UserUtils::getUserLevel($postUser)['name'] ?? 'Unknown') . '</div>'; ?>
                                         <?php if (!empty($postUser['major'])) echo '<div>Major: ' . htmlspecialchars($postUser['major']) . '</div>'; ?>
                                         <?php if (!empty($postUser['minor'])) echo '<div>Minor: ' . htmlspecialchars($postUser['minor']) . '</div>'; ?>
                                         <?php if (!empty($postUser['position'])) echo '<div>Position: ' . htmlspecialchars($postUser['position']) . '</div>'; ?>
@@ -124,6 +125,13 @@
                                     <span class="post-header"><?php echo htmlspecialchars($postUser['name']) . ' at ' . htmlspecialchars($postRow['creation_date']) . ':'; ?></span>
                                     
                                     <div class="post-right-content">
+                                        
+                                        <?php if (UserUtils::canEditPost($postRow)) { ?>
+                                        
+                                            <a href="/editPost.php?id=<?php echo htmlspecialchars($postRow['id']); ?>">Edit</a>
+                                        
+                                        <?php } ?>
+                                        
                                         <a href="#post-<?php echo htmlspecialchars($postNumber); ?>">#<?php echo htmlspecialchars($postNumber); ?></a>
                                     </div>
                                     

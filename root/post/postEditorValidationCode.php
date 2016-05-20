@@ -9,7 +9,7 @@
             "SELECT *
             FROM Posts
             WHERE topic = '" . $mysql -> real_escape_string($firstPostTopicID) . "'
-            ORDER BY creation_date DESC
+            ORDER BY creation_date ASC
             LIMIT 1"
         );
         
@@ -35,11 +35,47 @@
         }
     }
     
+    if (isset($editPostID) and $editPostID != null) //Load a specific post for editing
+    {
+        $loadPostQuery = $mysql -> query(
+            "SELECT *
+            FROM Posts
+            WHERE id = '" . $mysql -> real_escape_string($editPostID) . "'"
+        );
+        
+        if (!$loadPostQuery) //If the query failed
+        {
+            $errors[] = 'Something went wrong while loading the post.  Please try again.';
+            $errors[] = '[DEBUG]: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
+        }
+        else if ($loadPostQuery -> num_rows < 1)
+        {
+            $errors[] = 'Failed to load data for post with id ' . htmlspecialchars($editPostID) . ', that post was not found!';
+        }
+        else //It was loaded successfully
+        {
+            $row = $loadPostQuery -> fetch_assoc();
+            
+            $inputPostID = (int) $row['id'];
+            $inputTopicID = (int) $row['topic'];
+            $inputPostContent = $row['post_content'];
+            
+            $successes[] = 'Post with id ' . htmlspecialchars($editPostID) . ' loaded successfully.';
+        }
+    }
+    
+    if (isset($postTopicID) and is_numeric($postTopicID)) //Create a post in a topic
+    {
+        $inputTopicID = (int) $postTopicID;
+    }
+    
     if ($_SERVER['REQUEST_METHOD'] == 'POST') //Process form data
     {
         //Load variables
         if (isset($_POST['postID']) and is_numeric($_POST['postID']))
             $inputPostID = (int) $_POST['postID'];
+        else
+            $errors[] = 'Post ID must be set!';
         
         if (isset($_POST['postContent']))
             $inputPostContent = $_POST['postContent'];

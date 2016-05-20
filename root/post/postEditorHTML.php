@@ -1,8 +1,4 @@
 <div class="row">
-    <div class="col-sm-12"><span class="label">First Post</span></div>
-</div>
-
-<div class="row">
     <div class="col-sm-12">
         <div class="post-editor-toolbar">
             <button class="post-editor-toolbar-button" data-toggle="tooltip" title="Make Text Bold"><span class="glyphicon glyphicon-bold"></span></button>

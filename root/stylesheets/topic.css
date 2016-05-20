@@ -32,6 +32,8 @@
 /* These next three rules make the columns the same height */
 .post-bootstrap-row {
     display: flex;
+    /*min-height: calc(100vw * 1/47 * 5);*/
+    margin-bottom: calc(100vw * 1/47/2);
 }
 
 .post-user-bootstrap-column {
@@ -71,6 +73,10 @@
 
 .post-right-content {
     float: right;
+}
+
+.post-right-content * {
+    margin-left: calc(100vw * 1/47/2);
 }
 
 .post-content {

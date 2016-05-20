@@ -93,7 +93,7 @@
                 $inputUserLevel = $row['user_level'];
                 
                 //Check if editing user has permission to edit this user
-                if ($inputID != $_SESSION['user_id'] or $_SESSION['user_level'] < 1)
+                if ($inputID != $_SESSION['user_id'] and $_SESSION['user_level'] < 1)
                 {
                     die('You do not have permission to edit that user! (TODO: Show a better error message)');
                 }
