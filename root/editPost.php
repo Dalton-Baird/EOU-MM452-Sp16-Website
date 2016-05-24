@@ -35,6 +35,14 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST') //Process form data
     {
         require_once $_SERVER['DOCUMENT_ROOT'] . '/post/postEditorDBCode.php';
+        
+        if (empty($errors)) //If the errors array is empty after the database code is ran, then posting was successful
+        {
+            $redirectTopicID = $inputTopicID >= 0 ? $inputTopicID : ErrorUtils::redirectToCustomErrorPage("Invalid topic ID after database insertion code! This should be impossible.");
+            
+            //Redirect to the topic page
+            header('Location: /topic.php?id=' . urlencode($redirectTopicID));// . '#post-' . urlencode($redirectPostID));
+        }
     }
         
     //Calculate other variables for the page to use

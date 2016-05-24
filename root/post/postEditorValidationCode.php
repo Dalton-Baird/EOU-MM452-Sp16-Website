@@ -79,7 +79,7 @@
         {
             $inputPostID = (int) $_POST['postID'];
             
-            if (!UserUtils::canEditPost(ForumUtils::findPostByID($inputPostID)))
+            if ($inputPostID >= 0 and !UserUtils::canEditPost(ForumUtils::findPostByID($inputPostID)))
                 ErrorUtils::redirectToCustomErrorPage("You are not allowed to edit that post!");
                 //die("You are not allowed to edit that post! TODO: Make a better error message."); //TODO: Make a better error message
         }

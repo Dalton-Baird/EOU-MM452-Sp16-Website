@@ -231,6 +231,14 @@
         if (empty($errors)) //Only run the post DB code if topic creation was successful
         {
             require_once $_SERVER['DOCUMENT_ROOT'] . '/post/postEditorDBCode.php';
+            
+            if (empty($errors) and $inputTopicID >= 0) //If the errors array is empty after the database code is ran, then posting was successful
+            {
+                $redirectTopicID = $inputTopicID;
+                
+                //Redirect to the topic page
+                header('Location: /topic.php?id=' . urlencode($redirectTopicID));// . '#post-' . urlencode($redirectPostID));
+            }
         }
     }
         

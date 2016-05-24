@@ -257,11 +257,60 @@
                     $successes[] = 'Current password is correct.';
                 }
             }
+            
+            //Check if the user level exists
+            $userLevelQuery = $mysql -> query(
+                "SELECT level_number, name
+                FROM UserLevels
+                WHERE level_number = '" . $mysql -> real_escape_string($inputUserLevel) . "'"
+            );
+            
+            if (!$userLevelQuery) //If the query failed
+            {
+                $errors[] = 'Something went wrong while validating the user level.  Please try again.';
+                $errors[] = '[DEBUG]: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
+            }
+            else if ($userLevelQuery -> num_rows > 0) //That user level exists
+            {
+                $successes[] = 'That user level was found!';
+                
+                if ($inputUserLevel > $_SESSION['user_level'])
+                    $errors[] = 'You cannot set a user level higher than your own!';
+            }
+            else
+            {
+                $errors[] = 'That user level cannot be found!';
+            }
         }
         
         if (empty($errors)) //No errors, update user!
         {            
-            $successes[] = 'TODO: Updating code is not yet implemented!';
+            if (is_numeric($inputID) and $inputID >= 0) //Edit category
+            {                     
+                $updateStatement = $mysql -> query("
+                    UPDATE Users
+                    SET
+                        update_date=NOW(),
+                        update_user=" . $mysql -> real_escape_string($_SESSION['user_id']) . ",
+                        email='" . $mysql -> real_escape_string($inputEmail) . "',
+                        name='" . $mysql -> real_escape_string($inputName) . "',"
+                        . ($wantsToChangePassword ? "password_hash='" . $mysql -> real_escape_string($inputNewPassword) . "'," : "") .
+                        "major='" . $mysql -> real_escape_string($inputMajor) . "',
+                        minor='" . $mysql -> real_escape_string($inputMinor) . "',
+                        position='" . $mysql -> real_escape_string($inputPosition) . "',
+                        user_level=" . $mysql -> real_escape_string($inputUserLevel) . "
+                    WHERE id=" . $mysql -> real_escape_string($inputID));
+                
+                if (!$updateStatement)
+                {
+                    $errors[] = 'Something went wrong while updating the user.  Please try again.';
+                    $errors[] = '[DEBUG]: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
+                }
+                else
+                {
+                    $successes[] = 'User updated!';
+                }
+            }
         }
         
         //The user wants to change their profile picture
