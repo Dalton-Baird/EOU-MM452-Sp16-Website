@@ -1,4 +1,6 @@
 <?php
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/php/bbcode.php';
+
     /** A utilty class for forums related stuff */
     class ForumUtils
     {
@@ -193,6 +195,20 @@
             {
                 return null;
             }
+        }
+        
+        /**
+         * Parses the text for BB Code and returns the generated HTML as a string.
+         * Param: text: The text to parse
+         * Returns: The generated html
+         */
+        public static function parseBBCode(string $text)
+        {
+            BBCode::init();
+            
+            BBCode::$parser -> parse(htmlspecialchars($text));
+            
+            return BBCode::$parser -> getasHtml();
         }
     }
 ?>

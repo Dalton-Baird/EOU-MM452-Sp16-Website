@@ -140,9 +140,9 @@
                                         <a href="#post-<?php echo htmlspecialchars($postNumber); ?>">#<?php echo htmlspecialchars($postNumber); ?></a>
                                     </div>
                                     
-                                    <div class="post-content">
-                                        <?php echo htmlspecialchars($postRow['post_content']); ?>
-                                    </div>
+                                    <?php /* Since this div uses white-space: pre-wrap, there must be no additional whitespace
+                                    from the PHP source file */ ?>
+                                    <div class="post-content"><?php echo ForumUtils::parseBBCode($postRow['post_content']); ?></div>
                                     
                                     <?php /* <span class="post-footer"><? php echo 'Last edited by ' . htmlspecialchars($postUpdateUser['name']) . ' at ' . htmlspecialchars($postRow['update_date']); ? ></span> */ ?>
                                 </div>

@@ -81,4 +81,5 @@
 
 .post-content {
     margin-top: calc(100vw * 1/47/2);
+    white-space: pre-wrap;
 }
