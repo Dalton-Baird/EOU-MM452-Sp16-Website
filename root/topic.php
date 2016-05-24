@@ -3,6 +3,7 @@
     require_once $_SERVER['DOCUMENT_ROOT'] . '/fragments/connect.php';
     require_once $_SERVER['DOCUMENT_ROOT'] . '/php/utils/UserUtils.php';
     require_once $_SERVER['DOCUMENT_ROOT'] . '/php/utils/ForumUtils.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/php/utils/ErrorUtils.php';
     
     $topicID = null;
     $topicName = "Unknown Topic";
@@ -42,11 +43,15 @@
                 $topicCreationUserName = $topicCreationUser['name'];
             }
         }
+        else
+        {
+            ErrorUtils::redirectToCustomErrorPage("Topic with ID " . htmlspecialchars($topicID) . " not found!", "Topic Not Found");
+        }
     }
     else
     {
-        //TODO: Show an error or something
-        die("Topic ID is null! (TODO: Show a better error)");
+        //die("Topic ID is null! (TODO: Show a better error)");
+        ErrorUtils::redirectToCustomErrorPage("Topic ID is null!", "Invalid Topic URL");
     }
 ?>
 <!DOCTYPE html>

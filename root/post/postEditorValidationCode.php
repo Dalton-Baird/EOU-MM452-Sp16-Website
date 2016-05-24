@@ -1,4 +1,8 @@
 <?php
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/php/utils/UserUtils.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/php/utils/ForumUtils.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/php/utils/ErrorUtils.php';
+
     $inputPostID = -1;
     $inputTopicID = -1;
     $inputPostContent = '';
@@ -15,7 +19,6 @@
         
         if (!$loadPostQuery) //If the query failed
         {
-            //die($mysql -> error_get_last());
             $errors[] = 'Something went wrong while loading the first post in the topic.  Please try again.';
             $errors[] = '[DEBUG]: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
         }
@@ -73,7 +76,13 @@
     {
         //Load variables
         if (isset($_POST['postID']) and is_numeric($_POST['postID']))
+        {
             $inputPostID = (int) $_POST['postID'];
+            
+            if (!UserUtils::canEditPost(ForumUtils::findPostByID($inputPostID)))
+                ErrorUtils::redirectToCustomErrorPage("You are not allowed to edit that post!");
+                //die("You are not allowed to edit that post! TODO: Make a better error message."); //TODO: Make a better error message
+        }
         else
             $errors[] = 'Post ID must be set!';
         

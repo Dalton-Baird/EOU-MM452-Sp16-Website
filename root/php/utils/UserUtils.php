@@ -103,7 +103,7 @@
          */
         public static function canEditPost($postRow)
         {
-            return UserUtils::isModerator() or $postRow['creation_user'] == $_SESSION['user_id'];
+            return UserUtils::isModerator() or (isset($_SESSION['user_id']) and $postRow['creation_user'] == $_SESSION['user_id']);
         }
         
         /**

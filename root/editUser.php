@@ -2,6 +2,7 @@
     session_start();
     require_once $_SERVER['DOCUMENT_ROOT'] . '/fragments/connect.php';
     require_once $_SERVER['DOCUMENT_ROOT'] . '/fragments/require-login.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/php/utils/ErrorUtils.php';
     
     /**
      * Deletes the user's existing profile images
@@ -72,7 +73,6 @@
             
             if (!$loadUserQuery) //If the query failed
             {
-                //die($mysql -> error_get_last());
                 $errors[] = 'Something went wrong while loading user information.  Please try again.';
                 $errors[] = '[DEBUG]: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
             }
@@ -95,7 +95,8 @@
                 //Check if editing user has permission to edit this user
                 if ($inputID != $_SESSION['user_id'] and $_SESSION['user_level'] < 1)
                 {
-                    die('You do not have permission to edit that user! (TODO: Show a better error message)');
+                    //die('You do not have permission to edit that user! (TODO: Show a better error message)');
+                    ErrorUtils::redirectToCustomErrorPage("You do not have permission to edit that user!", "Permission Error");
                 }
                 
                 $successes[] = 'User with id ' . htmlspecialchars($userID) . ' loaded successfully.';
@@ -198,7 +199,6 @@
             
             if (!$userQuery) //If the query failed
             {
-                //die($mysql -> error_get_last());
                 $errors[] = 'Something went wrong while checking for existing usernames.  Please try again.';
                 $errors[] = '[DEBUG]: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
             }
@@ -221,7 +221,6 @@
             
             if (!$emailQuery) //If the query failed
             {
-                //die($mysql -> error_get_last());
                 $errors[] = 'Something went wrong while checking for existing email registrations.  Please try again.';
                 $errors[] = '[DEBUG]: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
             }

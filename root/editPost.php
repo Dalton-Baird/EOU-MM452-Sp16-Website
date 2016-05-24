@@ -2,6 +2,7 @@
     session_start();
     require_once($_SERVER['DOCUMENT_ROOT'] . '/fragments/connect.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/fragments/require-login.php');
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/php/utils/ErrorUtils.php';
     
     //Variables used when rendering the document:
     $errors = array(); //An array of errors to show the user
@@ -15,7 +16,8 @@
         $postTopicID = isset($_GET['topic']) ? $_GET['topic'] : null;
         
         if ($editPostID == null and $postTopicID == null)
-            die('ERROR: Post ID or Topic ID must be specified! TODO: Make a better error page.'); //TODO: Make a better error page
+            ErrorUtils::redirectToCustomErrorPage("Post ID or topic ID must be specified!");
+            //die('ERROR: Post ID or Topic ID must be specified! TODO: Make a better error page.'); //TODO: Make a better error page
     }
     
     if ($_SERVER['REQUEST_METHOD'] == 'POST') //Process form data
@@ -24,7 +26,8 @@
             $postTopicID = $_POST['topicID'];
         
         if (!isset($_POST['topicID']) or !is_numeric($_POST['topicID']) or $_POST['topicID'] < 0)
-            die('Topic ID must be specified!');
+            ErrorUtils::redirectToCustomErrorPage("Topic ID must be specified!");
+            //die('Topic ID must be specified!');
     }
     
     require_once $_SERVER['DOCUMENT_ROOT'] . '/post/postEditorValidationCode.php';

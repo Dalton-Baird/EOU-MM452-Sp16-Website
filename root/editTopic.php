@@ -29,7 +29,6 @@
             
             if (!$loadTopicQuery) //If the query failed
             {
-                //die($mysql -> error_get_last());
                 $errors[] = 'Something went wrong while loading the topic.  Please try again.';
                 $errors[] = '[DEBUG]: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
             }
@@ -105,7 +104,6 @@
                 
                 if (!$categoryQuery0) //If the query failed
                 {
-                    //die($mysql -> error_get_last());
                     $errors[] = 'Something went wrong while finding the category.  Please try again.';
                     $errors[] = '[DEBUG]: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
                 }
@@ -135,7 +133,6 @@
             
             if (!$topicAlreadyExistsQuery) //If the query failed
             {
-                //die($mysql -> error_get_last());
                 $errors[] = 'Something went wrong while checking for existing topic names.  Please try again.';
                 $errors[] = '[DEBUG]: MySQL Error #' . $mysql -> errno . ': ' . $mysql -> error;
             }
