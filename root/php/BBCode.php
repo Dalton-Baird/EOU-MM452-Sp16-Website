@@ -53,6 +53,32 @@
             $builder -> setParseContent(false);
             self::$parser -> addCodeDefinition($builder -> build());
             
+            //[youtube] tag
+            $builder = new CodeDefinitionBuilder('youtube', '<iframe type="text/html" width="640" height="390" src="https://www.youtube.com/embed/{param}" frameborder="0"></iframe>');
+            $builder -> setParseContent(false);
+            
+            $builder -> setBodyValidator(new class implements JBBCode\InputValidator //PHP 7 Anonymous class
+            {
+                public function validate($input)
+                {
+                    //Regex for youtube video ID
+                    return preg_match('([^\?&"\'>]+)', $input) == true; //TODO: Fix this
+                }
+            });
+            
+            self::$parser -> addCodeDefinition($builder -> build());
+            
+            //[spoiler] tag
+            $builder = new CodeDefinitionBuilder('spoiler',
+            '<div class="spoiler">' .
+                '<div class="spoiler-header" onclick="$(this).next().toggle(300);" title="Click to show / hide contents">Spoiler</div>' .
+                '<div class="spoiler-content" style="display: none;">{param}</div>' .
+            '</div>'
+            );
+            
+            $builder -> setParseContent(true);
+            self::$parser -> addCodeDefinition($builder -> build());
+            
             self::loadVisitors();
             
             self::$initialized = true;

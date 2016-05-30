@@ -1,0 +1,18 @@
+/* Spoilers */
+.spoiler {
+    background-color: #666666;
+    padding: 2px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.spoiler-header {
+    padding: 2px;
+    padding-left: 6px;
+    cursor: pointer; 
+}
+
+.spoiler-content {
+    background-color: #555555;
+    padding: 4px;
+}

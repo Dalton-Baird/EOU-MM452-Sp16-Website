@@ -59,6 +59,7 @@
     <head>
         <?php include $_SERVER['DOCUMENT_ROOT'] . '/fragments/header.php'; ?>
         <link href="stylesheets/topic.css" rel="stylesheet" type="text/css">
+        <link href="stylesheets/bbcode.css" rel="stylesheet" type="text/css">
         <title><?php echo htmlspecialchars($topicName); ?></title>
     </head>
     <body>
