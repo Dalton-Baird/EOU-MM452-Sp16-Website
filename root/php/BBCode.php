@@ -3,7 +3,7 @@
     require_once $_SERVER['DOCUMENT_ROOT'] . '/php/JBBCode/DefaultCodeDefinitionSet.php';
     require_once $_SERVER['DOCUMENT_ROOT'] . '/php/JBBCode/CodeDefinitionBuilder.php';
     //require_once $_SERVER['DOCUMENT_ROOT'] . '/php/CustomBBCode/CodeDefinitionQuote.php';
-    //require_once $_SERVER['DOCUMENT_ROOT'] . '/php/CustomBBCode/CodeDefinitionCode.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/php/CustomBBCode/CodeDefinitionCode.php';
     //require_once $_SERVER['DOCUMENT_ROOT'] . '/php/CustomBBCode/visitors/EmoticonVisitor.php';
     
     use JBBCode\Parser;
@@ -26,8 +26,8 @@
             //Set up JBBCode Parser
             self::$parser = new Parser();
             self::$parser -> addCodeDefinitionSet(new DefaultCodeDefinitionSet());
-            //self::$parser -> addCodeDefinition(new CodeDefinitionCode(false));
-            //self::$parser -> addCodeDefinition(new CodeDefinitionCode(true));
+            self::$parser -> addCodeDefinition(new CodeDefinitionCode(false));
+            self::$parser -> addCodeDefinition(new CodeDefinitionCode(true));
             //self::$parser -> addCodeDefinition(new CodeDefinitionQuote());
             
             //[s] strikethrough tag

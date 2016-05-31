@@ -60,6 +60,7 @@
         <?php include $_SERVER['DOCUMENT_ROOT'] . '/fragments/header.php'; ?>
         <link href="stylesheets/topic.css" rel="stylesheet" type="text/css">
         <link href="stylesheets/bbcode.css" rel="stylesheet" type="text/css">
+        <link href="highlight/styles/darkula.css" rel="stylesheet" type="text/css">
         <title><?php echo htmlspecialchars($topicName); ?></title>
     </head>
     <body>
@@ -169,5 +170,13 @@
         </div>
         
         <?php include $_SERVER['DOCUMENT_ROOT'] . '/fragments/footer-scripts.php'; ?>
+        <script src="/highlight/highlight.pack.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('.code-content').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                });
+            });
+        </script>
     </body>
 </html>
