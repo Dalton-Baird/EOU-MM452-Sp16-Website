@@ -2,11 +2,8 @@
     require_once $_SERVER['DOCUMENT_ROOT'] . '/php/JBBCode/Parser.php';
     require_once $_SERVER['DOCUMENT_ROOT'] . '/php/JBBCode/DefaultCodeDefinitionSet.php';
     require_once $_SERVER['DOCUMENT_ROOT'] . '/php/JBBCode/CodeDefinitionBuilder.php';
-    //require_once $_SERVER['DOCUMENT_ROOT'] . '/php/CustomBBCode/CodeDefinitionYoutube.php';
-    //require_once $_SERVER['DOCUMENT_ROOT'] . '/php/CustomBBCode/CodeDefinitionSpoiler.php';
     //require_once $_SERVER['DOCUMENT_ROOT'] . '/php/CustomBBCode/CodeDefinitionQuote.php';
     //require_once $_SERVER['DOCUMENT_ROOT'] . '/php/CustomBBCode/CodeDefinitionCode.php';
-    //require_once $_SERVER['DOCUMENT_ROOT'] . '/php/CustomBBCode/validators/CssFontSizeValidator.php';
     //require_once $_SERVER['DOCUMENT_ROOT'] . '/php/CustomBBCode/visitors/EmoticonVisitor.php';
     
     use JBBCode\Parser;
@@ -29,8 +26,6 @@
             //Set up JBBCode Parser
             self::$parser = new Parser();
             self::$parser -> addCodeDefinitionSet(new DefaultCodeDefinitionSet());
-            //self::$parser -> addCodeDefinition(new CodeDefinitionYoutube());
-            //self::$parser -> addCodeDefinition(new CodeDefinitionSpoiler());
             //self::$parser -> addCodeDefinition(new CodeDefinitionCode(false));
             //self::$parser -> addCodeDefinition(new CodeDefinitionCode(true));
             //self::$parser -> addCodeDefinition(new CodeDefinitionQuote());
@@ -40,9 +35,18 @@
             self::$parser -> addCodeDefinition($builder -> build());
             
             //[size] text size tag
-            //$builder = new CodeDefinitionBuilder('size', '<span style="font-size: {option}px">{param}</span>');
-            //$builder -> setUseOption(true) -> setOptionValidator(new CssFontSizeValidator());
-            //self::$parser -> addCodeDefinition($builder -> build());
+            $builder = new CodeDefinitionBuilder('size', '<span style="font-size: {option}pt">{param}</span>');
+            $builder -> setUseOption(true);
+            
+            $builder -> setOptionValidator(new class implements JBBCode\InputValidator
+            {
+                public function validate($input)
+                {
+                    return is_numeric($input) and $input >= 6 and $input <= 50;
+                }
+            });
+            
+            self::$parser -> addCodeDefinition($builder -> build());
             
             //[center] center tag
             $builder = new CodeDefinitionBuilder('center', '<span style="text-align: center; display: block;">{param}</span>');
@@ -61,8 +65,8 @@
             {
                 public function validate($input)
                 {
-                    //Regex for youtube video ID
-                    return preg_match('([^\?&"\'>]+)', $input) == true; //TODO: Fix this
+                    //Regex for youtube video ID (mostly)
+                    return preg_match('/^([^\?&"\'[\] >]+)$/', $input) == true;
                 }
             });
             
