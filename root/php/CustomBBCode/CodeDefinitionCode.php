@@ -69,7 +69,7 @@
                 self::$languages[] = new ProgrammingLanguage(array('Ruby'), 'ruby', array('rb', 'rbw'));
                 self::$languages[] = new ProgrammingLanguage(array('SQL', 'Structured Query Language'), 'sql', array('sql'));
                 
-                self::$languages[] = new ProgrammingLanguage(array('ARM Assembly'), 'armasm', array()); //Unchecked from here on
+                self::$languages[] = new ProgrammingLanguage(array('ARM-Assembly', 'ARM Assembly', 'armasm'), 'armasm', array());
                 self::$languages[] = new ProgrammingLanguage(array('ActionScript'), 'actionscript', array('as'));
                 self::$languages[] = new ProgrammingLanguage(array('Ada'), 'ada', array('adb', 'ads'));
                 self::$languages[] = new ProgrammingLanguage(array('AppleScript'), 'applescript', array('scpt', 'scptd', 'AppleScript'));
@@ -77,7 +77,7 @@
                 self::$languages[] = new ProgrammingLanguage(array('Basic'), 'basic', array());
                 self::$languages[] = new ProgrammingLanguage(array('CMake'), 'cmake', array());
                 self::$languages[] = new ProgrammingLanguage(array('D'), 'd', array('d'));
-                self::$languages[] = new ProgrammingLanguage(array('DOS Batch File', 'DOS .bat', 'Batch File'), 'dos', array('bat'));
+                self::$languages[] = new ProgrammingLanguage(array('DOS Batch File', 'DOS .bat', 'Batch File', 'Batch', 'DOS'), 'dos', array('bat'));
                 self::$languages[] = new ProgrammingLanguage(array('Delphi'), 'delphi', array());
                 self::$languages[] = new ProgrammingLanguage(array(json_decode('"F\u266F"'), 'F#', 'F Sharp'), 'fsharp', array('fs', 'fsi', 'fsx', 'fsscript'));
                 self::$languages[] = new ProgrammingLanguage(array('Fortran'), 'fortran', array('f', 'for', 'f90', 'f95'));
@@ -85,7 +85,7 @@
                 self::$languages[] = new ProgrammingLanguage(array('Gradle'), 'gradle', array('gradle'));
                 self::$languages[] = new ProgrammingLanguage(array('Groovy'), 'groovy', array('groovy'));
                 self::$languages[] = new ProgrammingLanguage(array('Haskell'), 'haskell', array('hs', 'lhs'));
-                self::$languages[] = new ProgrammingLanguage(array('Intel x86 Assembly'), 'x86asm', array());
+                self::$languages[] = new ProgrammingLanguage(array('Intel x86 Assembly', 'x86asm'), 'x86asm', array());
                 self::$languages[] = new ProgrammingLanguage(array('Less'), 'less', array('less'));
                 self::$languages[] = new ProgrammingLanguage(array('Lisp'), 'lisp', array());
                 self::$languages[] = new ProgrammingLanguage(array('LiveCode', 'Live Code'), 'livecode', array('livecode'));
@@ -96,7 +96,7 @@
                 self::$languages[] = new ProgrammingLanguage(array('SQF'), 'sqf', array('sqf'));
                 self::$languages[] = new ProgrammingLanguage(array('Scala'), 'scala', array('scala'));
                 self::$languages[] = new ProgrammingLanguage(array('TypeScript'), 'typescript', array('ts'));
-                self::$languages[] = new ProgrammingLanguage(array('Visual Basic', 'VB.NET', 'Visual Basic .NET'), 'vbnet', array('vb'));
+                self::$languages[] = new ProgrammingLanguage(array('Visual Basic', 'VB.NET', 'Visual Basic .NET', 'vb', 'vbnet'), 'vbnet', array('vb'));
                 self::$languages[] = new ProgrammingLanguage(array('VBScript'), 'vbscript', array('vbs'));
                 self::$languages[] = new ProgrammingLanguage(array('YAML', 'YAML Ain\'t Markup Language', 'Yet Another Markup Language'), 'yaml', array('yaml'));
                 
