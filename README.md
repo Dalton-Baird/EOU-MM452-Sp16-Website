@@ -10,4 +10,5 @@ This is a redesign of the EOU website.  It was originally created for the final 
 - Have a MySQL database
 - Point the web server's document root to the `/root` folder of this repository
 - Create a `/root/fragments/sql-credentials.php` file containing the MySQL server credentials (see `/root/fragments/connect.php` for the required variables)
-- Make sure the database has the required tables set up (TODO: once database tables are stable, add instructions on how to do that)
+- Set up the database with the sql statements in the `setup` folder.  See (/setup/setup.md) for more information.
+- Make sure everything works.  Start with registering an account.
