@@ -1,5 +1,5 @@
 .post-editor-content {
-    height: 128px !important;
+    min-height: 128px !important;
 }
 
 .post-editor-toolbar {
